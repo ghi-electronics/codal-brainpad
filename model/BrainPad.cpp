@@ -41,7 +41,9 @@ BrainPad::BrainPad() :
     timer(),
     messageBus(),
     io(),
-    buttonA(io.buttonA, DEVICE_ID_BUTTON_A, DEVICE_BUTTON_ALL_EVENTS, ACTIVE_LOW)
+    buttonA(io.buttonA, DEVICE_ID_BUTTON_A, DEVICE_BUTTON_ALL_EVENTS, ACTIVE_LOW),
+    temperatureSensor(io.temperature, DEVICE_ID_THERMOMETER),
+    lightSensor(io.light,  DEVICE_ID_LIGHT_SENSOR)
 {
     // Clear our status
     status = 0;
