@@ -15,13 +15,13 @@ main()
         int temper = temperature(TemperatureUnit::Celsius);
         int light = lightLevel();
 
-        if(temper > 30){
+        if(temper > 27)
            brain.io.ledRed.setDigitalValue(1);
-        }else brain.io.ledRed.setDigitalValue(0);
+        else brain.io.ledRed.setDigitalValue(0);
   
-        if(light > 150){
+        if(light > 150)
            brain.io.ledGreen.setDigitalValue(1);
-        }else brain.io.ledGreen.setDigitalValue(0);
+        else brain.io.ledGreen.setDigitalValue(0);
        
     }
 }
@@ -34,7 +34,7 @@ main()
    	*/
 
 int temperature(TemperatureUnit unit) {
-    int value = ((brain.temperatureSensor.getValue()*3.5)-500)/19.5;
+    int value = ((brain.temperatureSensor.getValue()*3.3)-400)/19.5;
     if (unit == TemperatureUnit::Celsius) return value;
     else return (9.0 / 5.0) * value + 32.0;
 }
