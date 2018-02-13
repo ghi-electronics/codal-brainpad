@@ -15,7 +15,7 @@ main()
         int temper = temperature(TemperatureUnit::Celsius);
         int light = lightLevel();
 
-        if(temper > 27){
+        if(temper > 30){
            brain.io.ledRed.setDigitalValue(1);
         }else brain.io.ledRed.setDigitalValue(0);
   
