@@ -21,7 +21,7 @@ main()
   
         if(light > 150){
            brain.io.ledGreen.setDigitalValue(1);
-        }else brain.io.ledRed.setDigitalValue(0);
+        }else brain.io.ledGreen.setDigitalValue(0);
        
     }
 }
