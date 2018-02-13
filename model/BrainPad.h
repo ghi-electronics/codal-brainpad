@@ -46,6 +46,8 @@ DEALINGS IN THE SOFTWARE.
 #include "BrainPadIO.h"
 #include "CodalFiber.h"
 #include "MessageBus.h"
+#include "TemperatureSensor.h"
+#include "LightSensor.h"
 
 
 // Status flag values
