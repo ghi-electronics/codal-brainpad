@@ -68,6 +68,8 @@ namespace codal
             MessageBus                  messageBus;
             BrainPadIO                  io;
             Button                      buttonA;
+            TemperatureSensor           temperatureSensor;
+            LightSensor                 lightSensor;
 
             /**
              * Constructor.
