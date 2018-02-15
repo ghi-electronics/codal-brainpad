@@ -48,6 +48,8 @@ DEALINGS IN THE SOFTWARE.
 #include "MessageBus.h"
 #include "TemperatureSensor.h"
 #include "LightSensor.h" 
+#include "Ssd1306.h"
+#include "MMA8453.h"
 
 
 // Status flag values
@@ -64,15 +66,17 @@ namespace codal
     class BrainPad : public CodalComponent
     {
         public:
-
+            CoordinateSpace             space;
             codal::_mbed::Serial        serial;
             codal::_mbed::Timer         timer;
             MessageBus                  messageBus;
             BrainPadIO                  io;
+            codal::_mbed::I2C           i2c;
             Button                      buttonA;
             TemperatureSensor           temperatureSensor;
             LightSensor                 lightSensor;
-           
+            Ssd1306                     lcd;
+            MMA8453                     accelerometer;
 
             /**
              * Constructor.
