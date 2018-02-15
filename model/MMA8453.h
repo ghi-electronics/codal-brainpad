@@ -6,7 +6,7 @@
 #include "CodalUtil.h"
 #include "CoordinateSystem.h"
 #include "Pin.h"
-#include "I2C.h"
+#include "MbedI2C.h"
 #include "Accelerometer.h"
 
 /**
@@ -56,7 +56,7 @@ namespace codal
      */
     class MMA8453 : public Accelerometer
     {
-        I2C&            i2c;                // The I2C interface to use.
+                      
         Pin             &int1;              // Data ready interrupt.
         uint16_t        address;            // I2C address of this accelerometer.
         uint16_t        samplePeriod;       // The time between samples, in milliseconds.
@@ -64,7 +64,7 @@ namespace codal
         Sample3D        sample;             // The last sample read.
 
         public:
-
+        codal::_mbed::I2C i2c;
         /**
           * Constructor.
           * Create a software abstraction of an accelerometer.
@@ -83,7 +83,7 @@ namespace codal
           * Accelerometer accelerometer = Accelerometer(i2c);
           * @endcode
          */
-        MMA8453(I2C &_i2c, Pin &_int1, CoordinateSpace &coordinateSpace, uint16_t address = MMA8453_DEFAULT_ADDR,  uint16_t id = DEVICE_ID_ACCELEROMETER);
+        MMA8453(Pin& sda, Pin& scl, Pin &_int1, CoordinateSpace &coordinateSpace, uint16_t address = MMA8453_DEFAULT_ADDR,  uint16_t id = DEVICE_ID_ACCELEROMETER);
 
         /**
           * Attempts to set the sample rate of the accelerometer to the specified value (in ms).

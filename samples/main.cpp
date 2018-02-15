@@ -1,20 +1,30 @@
 #include "BrainPad.h"
+#include <string>
 
 int temperature(TemperatureUnit unit);
 int lightLevel();
 
 BrainPad brain;
+const uint8_t heart[] = { 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 0, 1, 0, 1, 0, 1, 1, 1, 1, 1, 0, 1, 1, 1, 0, 0, 1, 1, 1, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, }; // a cute heart
+
 
 int
 main()
 {
     brain.init();
     brain.lcd.InitScreen();
-    
+    brain.lcd.ClearScreenBuffer();
+    brain.lcd.printImage(0,0,heart);
+    brain.lcd.WriteScreenBuffer();
+
     while(1)
     {
         
         int temper = temperature(TemperatureUnit::Celsius);
+        //int xAxis = brain.accelerometer.getX();
+
+        std::string t = "T:" + std::to_string(temper);
+       // brain.lcd.DrawText(1, 1, t, 2, 2);
         int light = lightLevel();
 
         if(temper > 27)

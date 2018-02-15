@@ -4,7 +4,7 @@ using namespace codal;
 
 static Ssd1306 *device_instance = NULL;
 
-Ssd1306::Ssd1306(I2C& _i2c, int width, int height): Image(width, height), i2c(_i2c)
+Ssd1306::Ssd1306(Pin& sda, Pin& scl, int width, int height): Image(width, height), i2c(sda, scl)
     
          
 {
@@ -239,27 +239,27 @@ void Ssd1306::DrawSymbol(int x, int y, char letter, int HScale, int VScale)
      ClearPartOfScreen(x + 5 * HScale, y, HScale, 8 * VScale);// clear the space between characters
 }
 
-//void Ssd1306::DrawText(int x, int y, string text, int HScale, int VScale) {
-            //int originalX = x;
-            //if (HScale == 0 || VScale == 0) return;
-            //if (text == "") return;
-            //
-            //const size_t length = sizeof(text);
-//
-            //for (unsigned i = 0; i < length; i++) {
-                //if (text[i] >= 32) {
-                    //DrawSymbol(x, y, text[i], HScale, VScale);
-                    //x += (6 * HScale);
-//
-                //}
-                //else {
-                    //if (text[i] == '\n') {
-                        //y += (9 * VScale);
-                    //}
-                    //if (text[i] == '\r') {
-                        //x = originalX;
-                    //}
-                //}
-            //}
-        //}
-//
+void Ssd1306::DrawText(int x, int y, string text, int HScale, int VScale) {
+            int originalX = x;
+            if (HScale == 0 || VScale == 0) return;
+            if (text == "") return;
+            
+            const size_t length = sizeof(text);
+
+            for (unsigned i = 0; i < length; i++) {
+                if (text[i] >= 32) {
+                    DrawSymbol(x, y, text[i], HScale, VScale);
+                    x += (6 * HScale);
+
+                }
+                else {
+                    if (text[i] == '\n') {
+                        y += (9 * VScale);
+                    }
+                    if (text[i] == '\r') {
+                        x = originalX;
+                    }
+                }
+            }
+        }
+

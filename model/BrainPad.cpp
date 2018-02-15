@@ -46,8 +46,8 @@ BrainPad::BrainPad() :
     buttonA(io.buttonA, DEVICE_ID_BUTTON_A, DEVICE_BUTTON_ALL_EVENTS, ACTIVE_LOW),
     temperatureSensor(io.temperature, DEVICE_ID_THERMOMETER),
     lightSensor(io.light,  DEVICE_ID_LIGHT_SENSOR),
-    lcd(i2c, 128, 64),
-    accelerometer(i2c, io.INT, space)
+    lcd(io.sda, io.scl, 128, 64),
+    accelerometer(io.sda, io.scl, io.INT, space)
 {
     // Clear our status
     status = 0;

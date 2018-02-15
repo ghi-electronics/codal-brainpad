@@ -2,7 +2,7 @@
 #define SSD1306_H
 
 #include "Image.h"
-#include "I2C.h"
+#include "MbedI2C.h"
 
 #include <string>
 
@@ -11,15 +11,15 @@ namespace codal
 {
    class Ssd1306: public Image {
    
-   I2C&    i2c; 
+  
    uint8_t Data[2];
    uint8_t ScreenBuffer[1024];
    int DeviceAddress = 0x78;
    typedef unsigned char byte;
 
      public:
-     
-     Ssd1306(I2C &_i2c, int width, int height);
+     codal::_mbed::I2C i2c;
+     Ssd1306(Pin& sda, Pin& scl, int width, int height);
     
     // Initialize the display
     void InitScreen();
@@ -44,7 +44,7 @@ namespace codal
 	void OffPixel(int, int);
 
     // Display text by the x, y
-	//void DrawText(int, int, string, int, int);
+	void DrawText(int, int, string, int, int);
 
 	void WriteScreenBuffer();
     
