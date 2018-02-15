@@ -47,7 +47,7 @@ DEALINGS IN THE SOFTWARE.
 #include "CodalFiber.h"
 #include "MessageBus.h"
 #include "TemperatureSensor.h"
-#include "LightSensor.h"
+#include "LightSensor.h" 
 
 
 // Status flag values
@@ -72,6 +72,7 @@ namespace codal
             Button                      buttonA;
             TemperatureSensor           temperatureSensor;
             LightSensor                 lightSensor;
+           
 
             /**
              * Constructor.
