@@ -46,7 +46,7 @@
       {
         "name": "codal-mbedos",
         "url": "https://github.com/VictorDuma/codal-mbedos",
-       
+        "branch": "master",
         "type": "git"
       }
     ]
