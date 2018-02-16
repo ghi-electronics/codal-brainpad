@@ -142,13 +142,11 @@ int MMA8453::requestUpdate()
 int MMA8453::updateSample()
 {
     int8_t data[6];
-    uint8_t src;
-    int result;
-
+   
    if(int1.getDigitalValue() == 1)
     {
        i2c.writeRegister(address, OUT_X_MSB, 0x01);
-       result = i2c.readRegister(address, OUT_X_MSB, (uint8_t *)data, 6);
+       i2c.readRegister(address, OUT_X_MSB, (uint8_t *)data, 6);
 
         sample.x = data[0] << 2 | data[1] >> 6;
         sample.y = data[2] << 2 | data[3] >> 6;

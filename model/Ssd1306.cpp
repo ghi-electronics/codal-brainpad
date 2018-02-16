@@ -4,7 +4,7 @@ using namespace codal;
 
 static Ssd1306 *device_instance = NULL;
 
-Ssd1306::Ssd1306(Pin& sda, Pin& scl, int width, int height): Image(width, height), i2c(sda, scl)
+Ssd1306::Ssd1306(Pin& sda, Pin& scl): i2c(sda, scl)
     
          
 {
@@ -99,6 +99,7 @@ void Ssd1306::WriteScreenBuffer()
     }
 }
 
+
 void Ssd1306::ClearPartOfScreen(int x, int y, int width, int height) {
             if (x == 0 && y == 0 && width == 128 && height == 64) ClearScreenBuffer();
             for (int lx = x; lx < width + x; lx++)
@@ -125,6 +126,16 @@ void Ssd1306::Pixel(int x, int y, bool set)
 void Ssd1306::SetPixel(int x, int y) 
 {
     Pixel(x, y, true);
+}
+
+void Ssd1306::drawBitmap(const uint8_t *bitmap, uint8_t x, uint8_t y, uint8_t width, uint8_t height) {
+ 
+   for(int16_t xd=0; xd<width; xd++) {
+        for(int16_t yd=0; yd<height; yd++ ) {
+            Pixel(x+xd, y+yd, bitmap[width * yd + xd]==1);
+        }
+    }
+  
 }
 
 

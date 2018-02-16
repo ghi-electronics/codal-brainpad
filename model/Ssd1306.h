@@ -9,7 +9,7 @@
 
 namespace codal
 {
-   class Ssd1306: public Image {
+   class Ssd1306 {
    
   
    uint8_t Data[2];
@@ -19,7 +19,7 @@ namespace codal
 
      public:
      codal::_mbed::I2C i2c;
-     Ssd1306(Pin& sda, Pin& scl, int width, int height);
+     Ssd1306(Pin& sda, Pin& scl);
     
     // Initialize the display
     void InitScreen();
@@ -28,6 +28,7 @@ namespace codal
     // Draw a pixel at given position
 	void SetPixel(int,int);
 
+    void drawBitmap(const uint8_t *bitmap, uint8_t x, uint8_t y, uint8_t width, uint8_t height);
 	 // Draw the border of a circle
 	void DrawCircle(int,int,int);
 

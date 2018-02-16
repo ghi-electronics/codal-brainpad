@@ -56,7 +56,8 @@ namespace codal
      */
     class MMA8453 : public Accelerometer
     {
-                      
+            
+        codal::_mbed::I2C i2c;  
         Pin             &int1;              // Data ready interrupt.
         uint16_t        address;            // I2C address of this accelerometer.
         uint16_t        samplePeriod;       // The time between samples, in milliseconds.
@@ -64,7 +65,7 @@ namespace codal
         Sample3D        sample;             // The last sample read.
 
         public:
-        codal::_mbed::I2C i2c;
+        
         /**
           * Constructor.
           * Create a software abstraction of an accelerometer.
