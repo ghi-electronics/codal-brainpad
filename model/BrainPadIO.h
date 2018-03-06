@@ -28,6 +28,7 @@ DEALINGS IN THE SOFTWARE.
 #include "mbed.h"
 #include "CodalConfig.h"
 #include "MbedPin.h"
+#include "BrainPadPin.h"
 
 //
 // Unique Pin number for each pin (synonymous with mbedos PinName)
@@ -87,8 +88,15 @@ namespace codal
             _mbed::Pin        A3;
             _mbed::Pin        A4;
             _mbed::Pin        A5;
-            _mbed::Pin        led;
+            _mbed::Pin        scl;
+            _mbed::Pin        sda;
+            _mbed::Pin        ledRed;
+			_mbed::Pin        ledBlue;
+			_mbed::Pin        ledGreen;
             _mbed::Pin        buttonA;
+            BrainPadPin       temperature;
+            BrainPadPin       light;
+            _mbed::Pin        INT;
 
             /**
              * Constructor.
