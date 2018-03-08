@@ -15,7 +15,7 @@ namespace codal {
 	public:
 
 
-		int getAnalogValue() override;
+		virtual int getAnalogValue();
 
 		BrainPadPin(int id, PinNumber name, PinCapability capability);
 	};
