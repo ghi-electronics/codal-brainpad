@@ -2,11 +2,7 @@
 
 using namespace codal;
 
-//static BrainPadDisplay *device_instance = NULL;
-
 BrainPadDisplay::BrainPadDisplay(Pin& sda, Pin& scl): i2c(sda, scl) {
-  
-	//device_instance = this;
 
 }
 

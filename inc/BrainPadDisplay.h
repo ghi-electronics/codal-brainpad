@@ -16,13 +16,10 @@ namespace codal {
 		codal::_mbed::I2C i2c;
 		BrainPadDisplay(Pin& sda, Pin& scl);
     
-    // Initialize the display
-    void InitScreen();
-
-	void WriteScreenBuffer(uint8_t *buffer);
-
-	void WriteCommand(int cmd);
-
+		void InitScreen();
+		void WriteScreenBuffer(uint8_t *buffer);
+		void WriteCommand(int cmd);
    };
 }
+
 #endif
