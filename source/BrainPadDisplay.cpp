@@ -7,7 +7,7 @@ BrainPadDisplay::BrainPadDisplay(Pin& sda, Pin& scl): i2c(sda, scl) {
 }
 
 void BrainPadDisplay::WriteCommand(int cmd) {
-	data[1] = static_cast<uint8_t>cmd;
+	data[1] = static_cast<uint8_t>(cmd);
 	i2c.write(DeviceAddress, data, 2, 0);
 }
 
