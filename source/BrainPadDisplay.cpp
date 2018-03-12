@@ -11,12 +11,11 @@ BrainPadDisplay::BrainPadDisplay(Pin& sda, Pin& scl): i2c(sda, scl) {
 }
 
 void BrainPadDisplay::WriteCommand(int cmd) {
-	Data[1] = (byte)cmd;
+	data[1] = static_cast<byte>cmd;
 	i2c.write(DeviceAddress, Data, 2, 0);
 }
 
 void BrainPadDisplay::InitScreen() {
-
 	WriteCommand(0xae);//--turn off oled panel
 	WriteCommand(0x00);//---set low column address
 	WriteCommand(0x10);//---set high column address
@@ -44,11 +43,11 @@ void BrainPadDisplay::InitScreen() {
  
  void BrainPadDisplay::WriteScreenBuffer(uint8_t * buffer) {
 
-	 for (int y = 0; y<8; y++) {
-		 Data[0] = 0x00;
-		 Data[1] = 0xB0 + y;
+	 for (int y = 0; y < 8; y++) {
+		 data[0] = 0x00;
+		 data[1] = 0xB0 + y;
 		 i2c.write(DeviceAddress, Data, 2, 0);     //Set GDDRAM page.
-		 Data[0] = 0x40;
+		 data[0] = 0x40;
 		 i2c.write(DeviceAddress, Data, 1, 1);     //Tell controller next bytes are GDDRAM data.
 		 i2c.write(DeviceAddress, buffer + 128 * y, 128, 0);
 	 }
