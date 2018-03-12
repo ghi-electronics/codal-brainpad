@@ -88,8 +88,8 @@ namespace codal
             _mbed::Pin        A4;
             _mbed::Pin        A5;
             _mbed::Pin        led;
-			_mbed::Pin        scl;
-			_mbed::Pin        sda;
+            _mbed::Pin        scl;
+            _mbed::Pin        sda;
             _mbed::Pin        buttonA;
 
             /**
