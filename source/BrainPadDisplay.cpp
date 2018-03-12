@@ -11,7 +11,7 @@ BrainPadDisplay::BrainPadDisplay(Pin& sda, Pin& scl): i2c(sda, scl) {
 void BrainPadDisplay::WriteCommand(int cmd) {
 	data[1] = static_cast<uint8_t>(cmd);
 
-	i2c.write(DeviceAddress, data, 2, 0);
+	i2c.write(BrainPadDisplay::deviceAddress, data, 2, 0);
 }
 
 void BrainPadDisplay::InitScreen() {
@@ -44,10 +44,10 @@ void BrainPadDisplay::WriteScreenBuffer(uint8_t* buffer) {
     for (int y = 0; y < 8; y++) {
          data[0] = 0x00;
          data[1] = 0xB0 + y;
-         i2c.write(DeviceAddress, data, 2, 0);
+         i2c.write(BrainPadDisplay::deviceAddress, data, 2, 0);
 
          data[0] = 0x40;
-         i2c.write(DeviceAddress, data, 1, 1);     
-         i2c.write(DeviceAddress, buffer + 128 * y, 128, 0);
+         i2c.write(BrainPadDisplay::deviceAddress, data, 1, 1);     
+         i2c.write(BrainPadDisplay::deviceAddress, buffer + 128 * y, 128, 0);
      }
 }
