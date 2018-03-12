@@ -2,6 +2,8 @@
 
 using namespace codal;
 
+const int BrainPadDisplay::deviceAddress = 0x78;
+
 BrainPadDisplay::BrainPadDisplay(Pin& sda, Pin& scl): i2c(sda, scl) {
 
 }
