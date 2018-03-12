@@ -70,7 +70,7 @@ void TestDisplay() {
     DrawCircle(20, 20, 10);
     
     brain.lcd.InitScreen();
-    brain.lcd.Writebuffer(buffer);
+    brain.lcd.WriteScreenBuffer(buffer);
 }
 
 void OnClick(Event) {
