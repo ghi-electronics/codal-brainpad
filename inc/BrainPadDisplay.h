@@ -3,21 +3,21 @@
 
 #include "Image.h"
 #include "MbedI2C.h"
-#include "stdint.h"
+#include <cstdint>
 
 namespace codal {
    class BrainPadDisplay {  
-  
-		uint8_t data[2];
+		private:
 		int DeviceAddress = 0x78;
-		uint8_t byte;
+		codal::_mbed::I2C i2c;
 
 		public:
-		codal::_mbed::I2C i2c;
+		uint8_t data[2];
+				
 		BrainPadDisplay(Pin& sda, Pin& scl);
     
 		void InitScreen();
-		void WriteScreenBuffer(uint8_t *buffer);
+		void WriteScreenBuffer(uint8_t* buffer);
 		void WriteCommand(int cmd);
    };
 }
