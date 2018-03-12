@@ -42,9 +42,9 @@ void BrainPadDisplay::InitScreen() {
 	 for (int y = 0; y < 8; y++) {
 		 data[0] = 0x00;
 		 data[1] = 0xB0 + y;
-		 i2c.write(DeviceAddress, Data, 2, 0);     //Set GDDRAM page.
+		 i2c.write(DeviceAddress, Data, 2, 0);     
 		 data[0] = 0x40;
-		 i2c.write(DeviceAddress, Data, 1, 1);     //Tell controller next bytes are GDDRAM data.
+		 i2c.write(DeviceAddress, Data, 1, 1);     
 		 i2c.write(DeviceAddress, buffer + 128 * y, 128, 0);
 	 }
  }
