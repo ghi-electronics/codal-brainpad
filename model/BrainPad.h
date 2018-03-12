@@ -69,7 +69,6 @@ namespace codal
             MessageBus                  messageBus;
             BrainPadIO                  io;
             Button                      buttonA;
-			Display                     display;
 			BrainPadDisplay				lcd;
             /**
              * Constructor.
