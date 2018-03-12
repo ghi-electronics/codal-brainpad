@@ -25,7 +25,7 @@ namespace codal
     void InitScreen();
 	void WriteScreenBuffer(uint8_t * buffer);
 
-	void Ssd1306_command(int cmd);
+	void WriteCommand(int cmd);
 
 	/*
   
