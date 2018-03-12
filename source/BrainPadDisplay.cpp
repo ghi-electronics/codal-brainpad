@@ -39,7 +39,8 @@ void BrainPadDisplay::InitScreen() {
 	WriteCommand(0x40);//--set startline 0x0
 	WriteCommand(0x8d);//--set Charge Pump enable/disable
 	WriteCommand(0x14);//--set(0x10) disable
-	WriteCommand(0xaf);//--turn on oled panel          
+	WriteCommand(0xaf);//--turn on oled panel 
+}
  
  void BrainPadDisplay::WriteScreenBuffer(uint8_t * buffer) {
 
