@@ -46,7 +46,7 @@ DEALINGS IN THE SOFTWARE.
 #include "BrainPadIO.h"
 #include "CodalFiber.h"
 #include "MessageBus.h"
-#include "Display.h"
+#include "BrainPadDisplay.h"
 
 
 // Status flag values
@@ -70,7 +70,7 @@ namespace codal
             BrainPadIO                  io;
             Button                      buttonA;
 			Display                     display;
-
+			BrainPadDisplay				lcd;
             /**
              * Constructor.
              */
