@@ -5,6 +5,10 @@ BrainPad brain;
 
 uint8_t buffer[1024];
 
+void TestDisplay();
+
+void OnClick(Event);
+
 int main() {
     brain.init();
     brain.serial.printf(" *** BRAINPAD BLINKY TEST ***\r\n");
