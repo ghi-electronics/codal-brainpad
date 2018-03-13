@@ -65,7 +65,7 @@ int main() {
     
     TestDisplay();
 
-    while(1) {
+    while (true) {
         brain.io.led.setDigitalValue(1);
         brain.sleep(200);
         brain.io.led.setDigitalValue(0);
