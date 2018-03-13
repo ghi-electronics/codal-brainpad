@@ -5,21 +5,6 @@ BrainPad brain;
 
 uint8_t buffer[1024];
 
-int main() {
-    brain.init();
-    brain.serial.printf(" *** BRAINPAD BLINKY TEST ***\r\n");
-    brain.messageBus.listen(DEVICE_ID_BUTTON_A, DEVICE_BUTTON_EVT_CLICK, OnClick);
-    
-    TestDisplay();
-
-    while(1) {
-        brain.io.led.setDigitalValue(1);
-        brain.sleep(200);
-        brain.io.led.setDigitalValue(0);
-        brain.sleep(200);
-    }
-}
-
 void SetPixel(int x, int y, bool set) {
     if (x >= 0 && x < 128 && y >= 0 && y < 64) {
         int offset = (x + (y / 8) * 128) + 1;
@@ -66,9 +51,24 @@ void TestDisplay() {
     DrawCircle(20, 20, 10);
     
     brain.lcd.InitScreen();
-    brain.lcd.Writebuffer(buffer);
+    brain.lcd.WriteScreenBuffer(buffer);
 }
 
-void OnClick(Event) {
+void OnClick(Event e) {
     brain.serial.printf("CLICK\r\n");
+}
+
+int main() {
+    brain.init();
+    brain.serial.printf(" *** BRAINPAD BLINKY TEST ***\r\n");
+    brain.messageBus.listen(DEVICE_ID_BUTTON_A, DEVICE_BUTTON_EVT_CLICK, OnClick);
+    
+    TestDisplay();
+
+    while (true) {
+        brain.io.led.setDigitalValue(1);
+        brain.sleep(200);
+        brain.io.led.setDigitalValue(0);
+        brain.sleep(200);
+    }
 }
