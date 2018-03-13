@@ -1,7 +1,6 @@
 #ifndef BPDISPLAY_H
 #define BPDISPLAY_H
 
-#include "Image.h"
 #include "MbedI2C.h"
 
 #include <cstdint>
