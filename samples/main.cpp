@@ -50,8 +50,8 @@ void DrawCircle(int x0, int y0, int radius) {
 void TestDisplay() {
     DrawCircle(20, 20, 10);
     
-    brain.lcd.InitScreen();
-    brain.lcd.WriteScreenBuffer(buffer);
+    brain.lcd.initScreen();
+    brain.lcd.writeScreenBuffer(buffer);
 }
 
 void OnClick(Event e) {
