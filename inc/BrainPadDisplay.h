@@ -15,9 +15,9 @@ namespace codal {
     public:                
         BrainPadDisplay(Pin& sda, Pin& scl);
     
-        void InitScreen();
-        void WriteScreenBuffer(uint8_t* buffer);
-        void WriteCommand(int cmd);
+        void initScreen();
+        void writeScreenBuffer(uint8_t* buffer);
+        void writeCommand(int cmd);
    };
 }
 
