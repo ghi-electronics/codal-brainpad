@@ -4,18 +4,7 @@ using namespace codal;
 
 const int BrainPadDisplay::deviceAddress = 0x78;
 
-BrainPadDisplay::BrainPadDisplay(Pin& sda, Pin& scl): i2c(sda, scl) {
-	initScreen();
-}
-
-void BrainPadDisplay::writeCommand(int cmd) {
-	data[0]=0;
-	data[1] = static_cast<uint8_t>(cmd);
-
-	i2c.write(BrainPadDisplay::deviceAddress, data, 2, 0);
-}
-
-void BrainPadDisplay::initScreen() {
+BrainPadDisplay::BrainPadDisplay(Pin& sda, Pin& scl) : i2c(sda, scl) {
     writeCommand(0xae);// turn off oled panel
     writeCommand(0x00);// set low column address
     writeCommand(0x10);// set high column address
@@ -38,7 +27,7 @@ void BrainPadDisplay::initScreen() {
     writeCommand(0x40);//--set startline 0x0
     writeCommand(0x8d);//--set Charge Pump enable/disable
     writeCommand(0x14);//--set(0x10) disable
-    writeCommand(0xaf);//--turn on oled panel 
+    writeCommand(0xaf);//--turn on oled panel
     writeCommand(0xc8);// mirror the screen
 
     // Mapping
@@ -51,11 +40,18 @@ void BrainPadDisplay::initScreen() {
     writeCommand(0);
     writeCommand(7);
 
-    // write to GDRAM
+    // Write to GDRAM
     vram[0] = 0x40;
 }
 
-void BrainPadDisplay::drawNativePixel(int x, int y, bool set ) {
+void BrainPadDisplay::writeCommand(int cmd) {
+    data[0] = 0;
+    data[1] = static_cast<uint8_t>(cmd);
+
+    i2c.write(BrainPadDisplay::deviceAddress, data, 2, 0);
+}
+
+void BrainPadDisplay::drawNativePixel(int x, int y, bool set) {
     int index = (x + (y / 8) * 128) + 1;
 
     if (set)
@@ -63,14 +59,16 @@ void BrainPadDisplay::drawNativePixel(int x, int y, bool set ) {
     else
         vram[index] &= static_cast<uint8_t>(~(1 << (y % 8)));
 }
+
 void BrainPadDisplay::writeScreenBuffer(uint8_t* buffer) {
-    // Convert PXT pixel map to native
-    for (int x = 0; x < 128; x++)
+    for (int x = 0; x < 128; x++) {
         for (int y = 0; y < 64; y++) {
-            int PXToffset = y * 16;
-            PXToffset += x / 8;
+            int offset = y * 16 + x / 8;
             int mask = 0x80 >> (x & 7);
-            drawNativePixel(x, y, (buffer[PXToffset] & mask) > 0);
+
+            drawNativePixel(x, y, (buffer[offset] & mask) > 0);
         }
-	i2c.write(BrainPadDisplay::deviceAddress, vram, (128 * 64 / 8) + 1, 0);  
+    }
+
+    i2c.write(BrainPadDisplay::deviceAddress, vram, (128 * 64 / 8) + 1, 0);
 }

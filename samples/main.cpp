@@ -3,11 +3,11 @@
 
 BrainPad brain;
 
-
 // ------------Draw pixels the PXT way---------------- //
+
 uint8_t PXTvram[1024];
 
-void DrawPointInPXTFormat(int x, int y, bool set=true) {
+void DrawPointInPXTFormat(int x, int y, bool set = true) {
     if (x >= 0 && x < 128 && y >= 0 && y < 64) {
         //original code: https://github.com/Microsoft/pxt-common-packages/blob/master/libs/screen/image.cpp#L55
         int offset = y * 16;
@@ -25,7 +25,7 @@ void DrawPointInPXTFormat(int x, int y, bool set=true) {
 void DrawCircleInPXTFormat(int x0, int y0, int radius) {
     int x = 0, y = radius;
     int dp = 1 - radius;
-    
+
     do {
         if (dp < 0) {
             dp = dp + 2 * (++x) + 3;
@@ -33,7 +33,7 @@ void DrawCircleInPXTFormat(int x0, int y0, int radius) {
         else {
             dp = dp + 2 * (++x) - 2 * (--y) + 5;
         }
-            
+
         DrawPointInPXTFormat(x0 + x, y0 + y, true);
         DrawPointInPXTFormat(x0 - x, y0 + y, true);
         DrawPointInPXTFormat(x0 + x, y0 - y, true);
@@ -52,11 +52,12 @@ void DrawCircleInPXTFormat(int x0, int y0, int radius) {
 
 void TestDisplay() {
     DrawCircleInPXTFormat(64, 32, 30);
-	DrawCircleInPXTFormat(64, 32, 20);
-	DrawCircleInPXTFormat(64, 32, 10);
+    DrawCircleInPXTFormat(64, 32, 20);
+    DrawCircleInPXTFormat(64, 32, 10);
     DrawPointInPXTFormat(64, 32);
     brain.lcd.writeScreenBuffer(PXTvram);
 }
+
 // ------------------------------------------ //
 
 void OnClick(Event e) {
@@ -67,7 +68,7 @@ int main() {
     brain.init();
     brain.serial.printf(" *** BRAINPAD BLINKY TEST ***\r\n");
     brain.messageBus.listen(DEVICE_ID_BUTTON_A, DEVICE_BUTTON_EVT_CLICK, OnClick);
-    
+
     TestDisplay();
 
     while (true) {
