@@ -11,8 +11,10 @@ namespace codal {
 		
         codal::_mbed::I2C i2c;
         uint8_t data[2];
-
-    public:                
+		uint8_t vram[(128 * 64 / 8) + 1];
+		void drawNativePixel(int x, int y, bool set );
+    
+	public:                
         BrainPadDisplay(Pin& sda, Pin& scl);
     
         void initScreen();
