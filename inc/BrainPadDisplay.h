@@ -6,18 +6,20 @@
 #include <cstdint>
 
 namespace codal {
-   class BrainPadDisplay {  
+   class BrainPadDisplay {
         static const int deviceAddress;
-		
+
         codal::_mbed::I2C i2c;
         uint8_t data[2];
+		uint8_t vram[(128 * 64 / 8) + 1];
 
-    public:                
-        BrainPadDisplay(Pin& sda, Pin& scl);
-    
-        void initScreen();
-        void writeScreenBuffer(uint8_t* buffer);
+		void drawNativePixel(int x, int y, bool set );
         void writeCommand(int cmd);
+
+	public:
+        BrainPadDisplay(Pin& sda, Pin& scl);
+
+        void writeScreenBuffer(uint8_t* buffer);
    };
 }
 
