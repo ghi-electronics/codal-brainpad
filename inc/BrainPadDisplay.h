@@ -15,6 +15,7 @@ namespace codal {
 
 		void drawNativePixel(int x, int y, bool set );
         void writeCommand(int cmd);
+        void flush();
 
 	public:
         BrainPadDisplay(Pin& sda, Pin& scl);

@@ -40,11 +40,11 @@ BrainPadDisplay::BrainPadDisplay(Pin& sda, Pin& scl) : i2c(sda, scl) {
     writeCommand(0);
     writeCommand(7);
 
-    // Clear the screen
-	memset(vram, 0, (128 * 64 / 8) + 1);
-	vram[0] = 0x40;
+    memset(vram, 0, (128 * 64 / 8) + 1);
 
-	i2c.write(BrainPadDisplay::deviceAddress, vram, (128 * 64 / 8) + 1, 0);
+    vram[0] = 0x40;
+
+    flush();
 }
 
 void BrainPadDisplay::writeCommand(int cmd) {
@@ -63,6 +63,10 @@ void BrainPadDisplay::drawNativePixel(int x, int y, bool set) {
         vram[index] &= static_cast<uint8_t>(~(1 << (y % 8)));
 }
 
+void BrainPadDisplay::flush() {
+    i2c.write(BrainPadDisplay::deviceAddress, vram, (128 * 64 / 8) + 1, 0);
+}
+
 void BrainPadDisplay::writeScreenBuffer(uint8_t* buffer) {
     for (int x = 0; x < 128; x++) {
         for (int y = 0; y < 64; y++) {
@@ -73,5 +77,5 @@ void BrainPadDisplay::writeScreenBuffer(uint8_t* buffer) {
         }
     }
 
-    i2c.write(BrainPadDisplay::deviceAddress, vram, (128 * 64 / 8) + 1, 0);
+    flush();
 }
