@@ -2,8 +2,8 @@
 
 using namespace codal;
 
-static const int BrainPadDisplay::deviceAddress;
-static const size_t BrainPadDisplay::vramSize;
+const int BrainPadDisplay::deviceAddress;
+const size_t BrainPadDisplay::vramSize;
 
 BrainPadDisplay::BrainPadDisplay(Pin& sda, Pin& scl) : i2c(sda, scl) {
     writeCommand(0xae);// turn off oled panel
