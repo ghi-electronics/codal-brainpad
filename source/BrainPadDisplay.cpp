@@ -40,8 +40,11 @@ BrainPadDisplay::BrainPadDisplay(Pin& sda, Pin& scl) : i2c(sda, scl) {
     writeCommand(0);
     writeCommand(7);
 
-    // Write to GDRAM
-    vram[0] = 0x40;
+    // Clear the screen
+	memset(vram, 0, (128 * 64 / 8) + 1);
+	vram[0] = 0x40;
+
+	i2c.write(BrainPadDisplay::deviceAddress, vram, (128 * 64 / 8) + 1, 0);
 }
 
 void BrainPadDisplay::writeCommand(int cmd) {

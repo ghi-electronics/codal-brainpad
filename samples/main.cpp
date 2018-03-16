@@ -22,34 +22,6 @@ void DrawPointInPXTFormat(int x, int y, bool set = true) {
     }
 }
 
-void DrawCircleInPXTFormat(int x0, int y0, int radius) {
-    int x = 0, y = radius;
-    int dp = 1 - radius;
-
-    do {
-        if (dp < 0) {
-            dp = dp + 2 * (++x) + 3;
-        }
-        else {
-            dp = dp + 2 * (++x) - 2 * (--y) + 5;
-        }
-
-        DrawPointInPXTFormat(x0 + x, y0 + y, true);
-        DrawPointInPXTFormat(x0 - x, y0 + y, true);
-        DrawPointInPXTFormat(x0 + x, y0 - y, true);
-        DrawPointInPXTFormat(x0 - x, y0 - y, true);
-        DrawPointInPXTFormat(x0 + y, y0 + x, true);
-        DrawPointInPXTFormat(x0 - y, y0 + x, true);
-        DrawPointInPXTFormat(x0 + y, y0 - x, true);
-        DrawPointInPXTFormat(x0 - y, y0 - x, true);
-    } while (x < y);
-
-    DrawPointInPXTFormat(x0 + radius, y0, true);
-    DrawPointInPXTFormat(x0, y0 + radius, true);
-    DrawPointInPXTFormat(x0 - radius, y0, true);
-    DrawPointInPXTFormat(x0, y0 - radius, true);
-}
-
 void TestDisplay() {
     DrawCircleInPXTFormat(64, 32, 30);
     DrawCircleInPXTFormat(64, 32, 20);
@@ -57,7 +29,6 @@ void TestDisplay() {
     DrawPointInPXTFormat(64, 32);
     brain.lcd.writeScreenBuffer(PXTvram);
 }
-
 // ------------------------------------------ //
 
 void OnClick(Event e) {
