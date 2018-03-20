@@ -16,9 +16,9 @@ void DrawPoint(int x, int y, bool set = true) {
         int mask = 0x80 >> (x & 7);
 
         if (set)
-            PXTvram[offset] |= mask;
+            vram[offset] |= mask;
         else
-            PXTvram[offset] &= ~mask;
+            vram[offset] &= ~mask;
     }
 }
 
