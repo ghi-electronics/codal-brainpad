@@ -1,18 +1,14 @@
 /*
 The MIT License (MIT)
-
 Copyright (c) 2017 Lancaster University.
-
 Permission is hereby granted, free of charge, to any person obtaining a
 copy of this software and associated documentation files (the "Software"),
 to deal in the Software without restriction, including without limitation
 the rights to use, copy, modify, merge, publish, distribute, sublicense,
 and/or sell copies of the Software, and to permit persons to whom the
 Software is furnished to do so, subject to the following conditions:
-
 The above copyright notice and this permission notice shall be included in
 all copies or substantial portions of the Software.
-
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
 FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL
@@ -41,15 +37,21 @@ using namespace codal;
   * by MicroBitPin instances on the default EventModel.
   */
 BrainPadIO::BrainPadIO() :
-    A0 (ID_PIN_P0, PA_0, PIN_CAPABILITY_AD),
-    A1 (ID_PIN_P1, PA_1, PIN_CAPABILITY_AD),
-    A2 (ID_PIN_P2, PA_4, PIN_CAPABILITY_AD),
-    A3 (ID_PIN_P3, PB_0, PIN_CAPABILITY_AD),
-    A4 (ID_PIN_P4, PC_1, PIN_CAPABILITY_AD),
-    A5 (ID_PIN_P5, PC_0, PIN_CAPABILITY_AD),
-    led (ID_PIN_P6, LED1, PIN_CAPABILITY_AD),
-    scl (ID_PIN_P9, PB_6, PIN_CAPABILITY_AD),
-    sda (ID_PIN_P10, PB_7, PIN_CAPABILITY_AD),
-    buttonA (DEVICE_ID_BUTTON_A, USER_BUTTON, PIN_CAPABILITY_DIGITAL)
+    scl (ID_PIN_SCL, PB_6, PIN_CAPABILITY_AD),
+    sda (ID_PIN_SDA, PB_7, PIN_CAPABILITY_AD),
+    temperaturePin (DEVICE_ID_THERMOMETER, PB_0, PIN_CAPABILITY_AD),
+    lightPin (DEVICE_ID_LIGHT_SENSOR, PB_1, PIN_CAPABILITY_AD),
+    buttonUp (ID_PIN_BUTTON_UP, PA_5, PIN_CAPABILITY_DIGITAL),
+    buttonDown (ID_PIN_BUTTON_DOWN, PB_10, PIN_CAPABILITY_DIGITAL),
+    buttonLeft (ID_PIN_BUTTON_LEFT, PA_15, PIN_CAPABILITY_DIGITAL),
+    buttonRight (ID_PIN_BUTTON_RIGHT, PC_13, PIN_CAPABILITY_DIGITAL),
+    ledGreen (ID_PIN_LED_GREEN, PC_8, PIN_CAPABILITY_AD),
+    ledBlue (ID_PIN_LED_BLUE, PC_6, PIN_CAPABILITY_AD),
+    ledRed (ID_PIN_LED_RED, PC_9, PIN_CAPABILITY_AD),
+    buzzer (ID_PIN_BUZZER, PB_8, PIN_CAPABILITY_AD),
+    interrupt (ID_PIN_INT, PC_14, PIN_CAPABILITY_AD),
+    servoOne (ID_PIN_SERVO_ONE, PA_3, PIN_CAPABILITY_AD),
+    servoTwo (ID_PIN_SERVO_TWO, PA_0, PIN_CAPABILITY_AD)
+   
 {
 }

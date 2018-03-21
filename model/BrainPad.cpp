@@ -1,18 +1,14 @@
 /*
 The MIT License (MIT)
-
 Copyright (c) 2016 Lancaster University, UK.
-
 Permission is hereby granted, free of charge, to any person obtaining a
 copy of this software and associated documentation files (the "Software"),
 to deal in the Software without restriction, including without limitation
 the rights to use, copy, modify, merge, publish, distribute, sublicense,
 and/or sell copies of the Software, and to permit persons to whom the
 Software is furnished to do so, subject to the following conditions:
-
 The above copyright notice and this permission notice shall be included in
 all copies or substantial portions of the Software.
-
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
 FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL
@@ -37,20 +33,21 @@ static BrainPad *device_instance = NULL;
   * that represent various device drivers used to control aspects of the micro:bit.
   */
 BrainPad::BrainPad() :
-    serial(SERIAL_TX, SERIAL_RX),
     timer(),
     messageBus(),
     io(),
-    buttonA(io.buttonA, DEVICE_ID_BUTTON_A, DEVICE_BUTTON_ALL_EVENTS, ACTIVE_LOW),
-	lcd(io.sda, io.scl)
+ 	lcd(io.sda, io.scl),
+    buttonUp(io.buttonUp, ID_PIN_BUTTON_UP, DEVICE_BUTTON_ALL_EVENTS, ACTIVE_LOW, PullMode::Up),
+    buttonDown(io.buttonDown, ID_PIN_BUTTON_DOWN, DEVICE_BUTTON_ALL_EVENTS, ACTIVE_LOW, PullMode::Up),
+    buttonLeft(io.buttonLeft, ID_PIN_BUTTON_LEFT, DEVICE_BUTTON_ALL_EVENTS, ACTIVE_LOW, PullMode::Up),
+    buttonRight(io.buttonRight, ID_PIN_BUTTON_RIGHT, DEVICE_BUTTON_ALL_EVENTS, ACTIVE_LOW, PullMode::Up)
+   
 {
     // Clear our status
     status = 0;
 
     // Configure serial port for debugging
     //serial.set_flow_control(mbed::Serial::Disabled);
-    serial.baud(115200);
-
     device_instance = this;
 }
 

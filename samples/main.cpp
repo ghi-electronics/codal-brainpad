@@ -1,80 +1,93 @@
 #include "BrainPad.h"
 #include "BrainPadDisplay.h"
+#include <string>
+#include "GraphicsHelper.h"
 
 BrainPad brain;
+GraphicsHelper graphics;
 
-// ------------Draw pixels the PXT way---------------- //
 
-uint8_t PXTvram[1024];
 
-void DrawPointInPXTFormat(int x, int y, bool set = true) {
-    if (x >= 0 && x < 128 && y >= 0 && y < 64) {
-        //original code: https://github.com/Microsoft/pxt-common-packages/blob/master/libs/screen/image.cpp#L55
-        int offset = y * 16;
-        offset += x / 8;
-        //original code: https://github.com/Microsoft/pxt-common-packages/blob/master/libs/screen/image.cpp#L142
-        int mask = 0x80 >> (x & 7);
+// Simple buttons test
+void TestButtons(){
+   if(brain.buttonUp.isPressed())
+       graphics.DrawString(1, 40, "UP   ");
+   if(brain.buttonLeft.isPressed())
+       graphics.DrawString(1, 40, "LEFT ");
+   if(brain.buttonRight.isPressed())
+       graphics.DrawString(1, 40, "RIGHT");
+   if(brain.buttonDown.isPressed())
+       graphics.DrawString(1, 40, "DOWN ");
+ }
 
-        if (set)
-            PXTvram[offset] |= mask;
-        else
-            PXTvram[offset] &= ~mask;
-    }
+void TestBuzzer(){
+	// Turn the buzzer on at 1800hz for 300ms
+	int frequency = 1800;
+    brain.io.buzzer.setAnalogValue(512); //per https://github.com/Microsoft/pxt-brainpad/blob/master/libs/music/music.cpp#L48
+    brain.io.buzzer.setAnalogPeriodUs(1000000 / frequency);
+    brain.sleep(300);
+    brain.io.buzzer.setAnalogValue(0);
 }
 
-void DrawCircleInPXTFormat(int x0, int y0, int radius) {
-    int x = 0, y = radius;
-    int dp = 1 - radius;
-
-    do {
-        if (dp < 0) {
-            dp = dp + 2 * (++x) + 3;
-        }
-        else {
-            dp = dp + 2 * (++x) - 2 * (--y) + 5;
-        }
-
-        DrawPointInPXTFormat(x0 + x, y0 + y, true);
-        DrawPointInPXTFormat(x0 - x, y0 + y, true);
-        DrawPointInPXTFormat(x0 + x, y0 - y, true);
-        DrawPointInPXTFormat(x0 - x, y0 - y, true);
-        DrawPointInPXTFormat(x0 + y, y0 + x, true);
-        DrawPointInPXTFormat(x0 - y, y0 + x, true);
-        DrawPointInPXTFormat(x0 + y, y0 - x, true);
-        DrawPointInPXTFormat(x0 - y, y0 - x, true);
-    } while (x < y);
-
-    DrawPointInPXTFormat(x0 + radius, y0, true);
-    DrawPointInPXTFormat(x0, y0 + radius, true);
-    DrawPointInPXTFormat(x0 - radius, y0, true);
-    DrawPointInPXTFormat(x0, y0 - radius, true);
+void TestLightBulb(){
+    // Slowley turn the LED on
+	for(int i=0; i<10; i++)	{
+		brain.io.ledBlue.setAnalogValue(i * 100);
+		brain.sleep(200);
+	}
+	// Turn it off
+	brain.io.ledBlue.setAnalogValue(0);
 }
 
-void TestDisplay() {
-    DrawCircleInPXTFormat(64, 32, 30);
-    DrawCircleInPXTFormat(64, 32, 20);
-    DrawCircleInPXTFormat(64, 32, 10);
-    DrawPointInPXTFormat(64, 32);
-    brain.lcd.writeScreenBuffer(PXTvram);
+// show the light level on the screen
+void TestLightSensor(){
+	// see: https://github.com/Microsoft/pxt-common-packages/blob/master/libs/lightsensor/lightsensor.cpp#L48
+    int light = brain.io.lightPin.getAnalogValue() / 16; // returned values are 16K max, change to 1K max.
+	std::string l = "L:" + std::to_string(light) + "  ";
+	graphics.DrawString(1, 20, l);
+	// writeScreenBuffer is in the main loop
 }
 
-// ------------------------------------------ //
 
-void OnClick(Event e) {
-    brain.serial.printf("CLICK\r\n");
+// show temp in Celisius
+void TestTemperatureSensor(){
+    int temper = (((brain.io.temperaturePin.getAnalogValue() / 16383.0) * 3300) - 450) / 19.5; // normalize to 10 bits output
+	std::string t = "T:" + std::to_string(temper) + "  ";
+	graphics.DrawString(1, 1, t);
+    // writeScreenBuffer is in the main loop
 }
+
+// requires servo motor on servo pins #1
+void TestServo() {
+	brain.io.servoOne.setServoValue(180);
+    brain.sleep(200);
+    brain.io.servoOne.setServoValue(90);
+    brain.sleep(200);
+    brain.io.servoOne.setServoValue(0);
+    brain.sleep(200);
+}
+
+// Event test
+// This doesn't work yet.. investigating
+/*void onButton(Event)
+{
+    brain.io.ledRed.setDigitalValue(1);
+}*/
 
 int main() {
     brain.init();
-    brain.serial.printf(" *** BRAINPAD BLINKY TEST ***\r\n");
-    brain.messageBus.listen(DEVICE_ID_BUTTON_A, DEVICE_BUTTON_EVT_CLICK, OnClick);
-
-    TestDisplay();
-
+    TestServo();
+	TestBuzzer();
+	TestLightBulb();
+	// Events are being looked at still
+	//brain.messageBus.listen(ID_PIN_BUTTON_LEFT, DEVICE_BUTTON_EVT_CLICK, onButton);
+        
     while (true) {
-        brain.io.led.setDigitalValue(1);
-        brain.sleep(100);
-        brain.io.led.setDigitalValue(0);
-        brain.sleep(100);
+        TestButtons();
+	    TestTemperatureSensor();
+        TestLightSensor();
+		// show the messages on the screen
+        brain.lcd.writeScreenBuffer(graphics.vram); 
     }
+   return 0;
 }
