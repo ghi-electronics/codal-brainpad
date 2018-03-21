@@ -55,7 +55,7 @@ void TestDisplay() {
     DrawCircle(64, 32, 20);
     DrawCircle(64, 32, 10);
     DrawPoint(64, 32);
-    brain.lcd.writeScreenBuffer(PXTvram);
+    brain.lcd.writeScreenBuffer(vram);
 }
 // ------------------------------------------ //
 
