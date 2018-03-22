@@ -48,7 +48,6 @@ DEALINGS IN THE SOFTWARE.
 #include "MessageBus.h"
 #include "BrainPadDisplay.h"
 
-
 // Status flag values
 #define DEVICE_INITIALIZED                    0x01
 
@@ -63,13 +62,15 @@ namespace codal
     class BrainPad : public CodalComponent
     {
         public:
-
-            codal::_mbed::Serial        serial;
             codal::_mbed::Timer         timer;
             MessageBus                  messageBus;
             BrainPadIO                  io;
-            Button                      buttonA;
             BrainPadDisplay             lcd;
+            Button                      buttonUp;
+            Button                      buttonDown;
+            Button                      buttonLeft;
+            Button                      buttonRight;
+
             /**
              * Constructor.
              */

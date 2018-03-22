@@ -37,19 +37,17 @@ static BrainPad *device_instance = NULL;
   * that represent various device drivers used to control aspects of the micro:bit.
   */
 BrainPad::BrainPad() :
-    serial(SERIAL_TX, SERIAL_RX),
     timer(),
     messageBus(),
     io(),
-    buttonA(io.buttonA, DEVICE_ID_BUTTON_A, DEVICE_BUTTON_ALL_EVENTS, ACTIVE_LOW),
-	lcd(io.sda, io.scl)
+    lcd(io.sda, io.scl),
+    buttonUp(io.buttonUp, ID_PIN_BUTTON_UP, DEVICE_BUTTON_ALL_EVENTS, ACTIVE_LOW, PullMode::Up),
+    buttonDown(io.buttonDown, ID_PIN_BUTTON_DOWN, DEVICE_BUTTON_ALL_EVENTS, ACTIVE_LOW, PullMode::Up),
+    buttonLeft(io.buttonLeft, ID_PIN_BUTTON_LEFT, DEVICE_BUTTON_ALL_EVENTS, ACTIVE_LOW, PullMode::Up),
+    buttonRight(io.buttonRight, ID_PIN_BUTTON_RIGHT, DEVICE_BUTTON_ALL_EVENTS, ACTIVE_LOW, PullMode::Up)
 {
     // Clear our status
     status = 0;
-
-    // Configure serial port for debugging
-    //serial.set_flow_control(mbed::Serial::Disabled);
-    serial.baud(115200);
 
     device_instance = this;
 }
