@@ -49,8 +49,6 @@ DEALINGS IN THE SOFTWARE.
 #include "MessageBus.h"
 #include "BrainPadDisplay.h" 
 
-
-
 // Status flag values
 #define DEVICE_INITIALIZED                    0x01
 

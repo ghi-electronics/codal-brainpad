@@ -34,7 +34,6 @@ DEALINGS IN THE SOFTWARE.
 // Unique Pin number for each pin (synonymous with mbedos PinName)
 //
 
-
 //
 // Component IDs for each pin.
 // The can be user defined, but uniquely identify a pin when using the eventing APIs/
@@ -81,7 +80,6 @@ namespace codal
     {
         public:
 
-       
             _mbed::Pin        scl;
             _mbed::Pin        sda;
             _mbed::Pin        temperaturePin;
@@ -97,8 +95,6 @@ namespace codal
             _mbed::Pin        interrupt;
             _mbed::Pin        servoOne;
             _mbed::Pin        servoTwo;
-          
-            
 
             /**
              * Constructor.

@@ -18,7 +18,6 @@ namespace codal {
 
         BrainPadPin(int id, PinNumber name, PinCapability capability);
     };
-
 }
 
 #endif
