@@ -42,7 +42,7 @@ BrainPad::BrainPad() :
     messageBus(),
     io(),
     buttonA(io.buttonA, DEVICE_ID_BUTTON_A, DEVICE_BUTTON_ALL_EVENTS, ACTIVE_LOW),
-	lcd(io.sda, io.scl)
+    lcd(io.sda, io.scl)
 {
     // Clear our status
     status = 0;
