@@ -8,17 +8,16 @@ namespace codal {
 
     class BrainPadPin : public codal::_mbed::Pin {
 
-	protected:
+    protected:
 
-		void *pin;
+        void *pin;
 
-	public:
+    public:
 
+        int getAnalogValue() override;
 
-		int getAnalogValue() override;
-
-		BrainPadPin(int id, PinNumber name, PinCapability capability);
-	};
+        BrainPadPin(int id, PinNumber name, PinCapability capability);
+    };
 
 }
 

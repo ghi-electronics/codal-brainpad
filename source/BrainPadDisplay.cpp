@@ -2,7 +2,8 @@
 
 using namespace codal;
 
-const int BrainPadDisplay::deviceAddress = 0x78;
+const int BrainPadDisplay::deviceAddress;
+const size_t BrainPadDisplay::vramSize;
 
 BrainPadDisplay::BrainPadDisplay(Pin& sda, Pin& scl) : i2c(sda, scl) {
     writeCommand(0xae);// turn off oled panel
@@ -40,8 +41,11 @@ BrainPadDisplay::BrainPadDisplay(Pin& sda, Pin& scl) : i2c(sda, scl) {
     writeCommand(0);
     writeCommand(7);
 
-    // Write to GDRAM
+    memset(vram, 0, BrainPadDisplay::vramSize);
+
     vram[0] = 0x40;
+
+    flush();
 }
 
 void BrainPadDisplay::writeCommand(int cmd) {
@@ -60,6 +64,10 @@ void BrainPadDisplay::drawNativePixel(int x, int y, bool set) {
         vram[index] &= static_cast<uint8_t>(~(1 << (y % 8)));
 }
 
+void BrainPadDisplay::flush() {
+    i2c.write(BrainPadDisplay::deviceAddress, vram, BrainPadDisplay::vramSize, 0);
+}
+
 void BrainPadDisplay::writeScreenBuffer(uint8_t* buffer) {
     for (int x = 0; x < 128; x++) {
         for (int y = 0; y < 64; y++) {
@@ -70,5 +78,5 @@ void BrainPadDisplay::writeScreenBuffer(uint8_t* buffer) {
         }
     }
 
-    i2c.write(BrainPadDisplay::deviceAddress, vram, (128 * 64 / 8) + 1, 0);
+    flush();
 }

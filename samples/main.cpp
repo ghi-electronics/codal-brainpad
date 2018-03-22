@@ -9,13 +9,13 @@ GraphicsHelper graphics;
 // Simple buttons test
 void TestButtons(){
    if(brain.buttonUp.isPressed())
-       graphics.DrawString(1, 40, "UP   ");
+        graphics.DrawString(1, 40, "UP   ");
    if(brain.buttonLeft.isPressed())
-       graphics.DrawString(1, 40, "LEFT ");
+           graphics.DrawString(1, 40, "LEFT ");
    if(brain.buttonRight.isPressed())
-       graphics.DrawString(1, 40, "RIGHT");
-   if(brain.buttonDown.isPressed())
-       graphics.DrawString(1, 40, "DOWN ");
+           graphics.DrawString(1, 40, "RIGHT");
+  if(brain.buttonDown.isPressed())
+           graphics.DrawString(1, 40, "DOWN ");
  }
 
 void TestBuzzer(){
@@ -30,8 +30,8 @@ void TestBuzzer(){
 void TestLightBulb(){
     // Slowley turn the LED on
     for(int i=0; i<10; i++)	{
-    brain.io.ledBlue.setAnalogValue(i * 100);
-    brain.sleep(200);
+        brain.io.ledBlue.setAnalogValue(i * 100);
+        brain.sleep(200);
     }
     // Turn it off
     brain.io.ledBlue.setAnalogValue(0);
@@ -77,6 +77,7 @@ int main() {
     TestServo();
     TestBuzzer();
     TestLightBulb();
+        
     // Events are being looked at still
     //brain.messageBus.listen(ID_PIN_BUTTON_LEFT, DEVICE_BUTTON_EVT_CLICK, onButton);
         
@@ -84,6 +85,7 @@ int main() {
         TestButtons();
         TestTemperatureSensor();
         TestLightSensor();
+        
         // show the messages on the screen
         brain.lcd.writeScreenBuffer(graphics.vram); 
     }

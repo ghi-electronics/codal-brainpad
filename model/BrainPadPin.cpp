@@ -5,16 +5,15 @@ namespace codal{
     
 
          BrainPadPin::BrainPadPin(int id, PinNumber name, PinCapability capability) : codal::_mbed::Pin(id, name, capability)
-		 {     
+        {     
             this->pullMode = DEVICE_DEFAULT_PULLMODE;
 
             this->status = 0x00;
             this->pin = NULL;
-		
-		 }
+    
+        }
 
-	
-		 int BrainPadPin::getAnalogValue() 
+        int BrainPadPin::getAnalogValue() 
         {
 
             //check if this pin has an analogue mode...
@@ -32,8 +31,4 @@ namespace codal{
             return (((AnalogIn *)pin)->read_u16() >> 6);
         } 
 
-	}
-
-
-
-
+    }

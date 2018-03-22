@@ -30,13 +30,13 @@ void GraphicsHelper::DrawText(int x, int y, char letter) {
         }
     }
     // clear the space between characters
-    for(int i=0; i<8; i++)
-        DrawPoint(x + 5, y+i, 0);
+    for(int i = 0; i < 8; i++)
+        DrawPoint(x + 5, y + i, 0);
 }
 
 void GraphicsHelper::DrawString(int x, int y, std::string text) {
     for (size_t i = 0; i < text.length(); i++) {
-        if (text[i] >= 32) {
+        if (text[i] > = 32) {
             DrawText(x, y, text[i]);
             x += 6;
         }
