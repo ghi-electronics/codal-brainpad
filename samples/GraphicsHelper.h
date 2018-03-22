@@ -104,9 +104,9 @@ namespace codal {
             0x08, 0x08, 0x2a, 0x1c, 0x08  /* ~ */
         };
 
-	void DrawPoint(int, int, bool);
+    void DrawPoint(int, int, bool);
 
-	void DrawText(int, int, char);
+    void DrawText(int, int, char);
 
     public:
         GraphicsHelper();
@@ -116,9 +116,3 @@ namespace codal {
 }
 
 #endif
-
-
-
-
-
-

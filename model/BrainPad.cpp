@@ -36,7 +36,7 @@ BrainPad::BrainPad() :
     timer(),
     messageBus(),
     io(),
- 	lcd(io.sda, io.scl),
+    lcd(io.sda, io.scl),
     buttonUp(io.buttonUp, ID_PIN_BUTTON_UP, DEVICE_BUTTON_ALL_EVENTS, ACTIVE_LOW, PullMode::Up),
     buttonDown(io.buttonDown, ID_PIN_BUTTON_DOWN, DEVICE_BUTTON_ALL_EVENTS, ACTIVE_LOW, PullMode::Up),
     buttonLeft(io.buttonLeft, ID_PIN_BUTTON_LEFT, DEVICE_BUTTON_ALL_EVENTS, ACTIVE_LOW, PullMode::Up),
