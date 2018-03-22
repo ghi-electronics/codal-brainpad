@@ -119,11 +119,10 @@ void DrawPoint(int x, int y, bool set) {
 
 void DrawText(int x, int y, char letter) {
     int index = 5 * (letter - 32);
-
     for (int h = 0; h < 5; h++) {
         for (int v = 0; v < 8; v++) {
             int show = (font[index + h] & (1 << v)) != 0;
-            DrawPoint(x + h  , y + v , show);       
+            DrawPoint(x + h, y + v, show);
         }
     }
     // clear the space between characters
@@ -197,26 +196,15 @@ void TestServo() {
     brain.sleep(200);
 }
 
-// Event test
-// This doesn't work yet.. investigating
-/*void onButton(Event)
-{
-    brain.io.ledRed.setDigitalValue(1);
-}*/
-
 int main() {
     brain.init();
     TestServo();
     TestBuzzer();
     TestLightBulb();
-    // Events are being looked at still
-    //brain.messageBus.listen(ID_PIN_BUTTON_LEFT, DEVICE_BUTTON_EVT_CLICK, onButton);
-
     while (true) {
         TestButtons();
         TestTemperatureSensor();
         TestLightSensor();
-        // show the messages on the screen
         brain.lcd.writeScreenBuffer(vram); 
     }
     return 0;
