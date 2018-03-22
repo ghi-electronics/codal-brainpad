@@ -139,7 +139,6 @@ void DrawString(int x, int y, std::string text) {
     }
 }
 
-
 // Simple buttons test
 void TestButtons(){
     if(brain.buttonUp.isPressed())
@@ -179,7 +178,6 @@ void TestLightSensor(){
     DrawString(1, 20, l);
     // writeScreenBuffer is in the main loop
 }
-
 
 // show temp in Celisius
 void TestTemperatureSensor(){
