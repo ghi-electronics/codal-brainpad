@@ -5,7 +5,7 @@
 BrainPad brain;
 
 uint8_t vram[1024];
-uint8_t* font = new uint8_t[95 * 5]{
+uint8_t* font = new uint8_t[95 * 5] {
     0x00, 0x00, 0x00, 0x00, 0x00, /* Space	0x20 */
     0x00, 0x00, 0x4f, 0x00, 0x00, /* ! */
     0x00, 0x07, 0x00, 0x07, 0x00, /* " */
@@ -140,7 +140,7 @@ void DrawString(int x, int y, std::string text) {
 }
 
 // Simple buttons test
-void TestButtons(){
+void TestButtons() {
     if(brain.buttonUp.isPressed())
         DrawString(1, 40, "UP   ");
     if(brain.buttonLeft.isPressed())
@@ -151,7 +151,7 @@ void TestButtons(){
         DrawString(1, 40, "DOWN ");
 }
 
-void TestBuzzer(){
+void TestBuzzer() {
     // Turn the buzzer on at 1800hz for 300ms
     int frequency = 1800;
     brain.io.buzzer.setAnalogValue(512); //per https://github.com/Microsoft/pxt-brainpad/blob/master/libs/music/music.cpp#L48
@@ -160,9 +160,9 @@ void TestBuzzer(){
     brain.io.buzzer.setAnalogValue(0);
 }
 
-void TestLightBulb(){
+void TestLightBulb() {
     // Slowley turn the LED on
-    for(int i = 0; i < 10; i++)	{
+    for(int i = 0; i < 10; i++) {
         brain.io.ledBlue.setAnalogValue(i * 100);
         brain.sleep(200);
     }
@@ -171,7 +171,7 @@ void TestLightBulb(){
 }
 
 // show the light level on the screen
-void TestLightSensor(){
+void TestLightSensor() {
     // see: https://github.com/Microsoft/pxt-common-packages/blob/master/libs/lightsensor/lightsensor.cpp#L48
     int light = brain.io.lightPin.getAnalogValue() / 16; // returned values are 16K max, change to 1K max.
     std::string l = "L:" + std::to_string(light) + "  ";
@@ -180,7 +180,7 @@ void TestLightSensor(){
 }
 
 // show temp in Celisius
-void TestTemperatureSensor(){
+void TestTemperatureSensor() {
     int temper = (((brain.io.temperaturePin.getAnalogValue() / 16383.0) * 3300) - 450) / 19.5; // normalize to 10 bits output
     std::string t = "T:" + std::to_string(temper) + "  ";
     DrawString(1, 1, t);
