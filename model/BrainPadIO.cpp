@@ -57,6 +57,5 @@ BrainPadIO::BrainPadIO() :
 +    interrupt (ID_PIN_INT, PC_14, PIN_CAPABILITY_AD),
 +    servoOne (ID_PIN_SERVO_ONE, PA_3, PIN_CAPABILITY_AD),
 +    servoTwo (ID_PIN_SERVO_TWO, PA_0, PIN_CAPABILITY_AD)
-+  
 {
 }

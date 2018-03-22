@@ -127,8 +127,8 @@ void DrawText(int x, int y, char letter) {
         }
     }
     // clear the space between characters
-    for(int i=0;i<8;i++)
-        DrawPoint(x + 5, y+i, 0);
+    for(int i = 0; i < 8; i++)
+        DrawPoint(x + 5, y + i, 0);
 }
 void DrawString(int x, int y, std::string text) {
     for (size_t i = 0; i < text.length(); i++) {
@@ -162,7 +162,7 @@ void TestBuzzer(){
 
 void TestLightBulb(){
     // Slowley turn the LED on
-    for(int i=0; i<10; i++)	{
+    for(int i = 0; i < 10; i++)	{
         brain.io.ledBlue.setAnalogValue(i * 100);
         brain.sleep(200);
     }
