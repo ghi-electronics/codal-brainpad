@@ -5,15 +5,11 @@
 #include "mbed.h"
 
 namespace codal {
-
     class BrainPadPin : public codal::_mbed::Pin {
-
     protected:
-
-        void *pin;
+        void* pin;
 
     public:
-
         int getAnalogValue() override;
 
         BrainPadPin(int id, PinNumber name, PinCapability capability);

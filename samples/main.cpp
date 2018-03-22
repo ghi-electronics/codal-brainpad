@@ -105,11 +105,9 @@ uint8_t* font = new uint8_t[95 * 5] {
 
 void DrawPoint(int x, int y, bool set) {
     if (x >= 0 && x < 128 && y >= 0 && y < 64) {
-        //original code: https://github.com/Microsoft/pxt-common-packages/blob/master/libs/screen/image.cpp#L55
-        int offset = y * 16;
-        offset += x / 8;
-        //original code: https://github.com/Microsoft/pxt-common-packages/blob/master/libs/screen/image.cpp#L142
+        int offset = y * 16 + x / 8;
         int mask = 0x80 >> (x & 7);
+
         if (set)
             vram[offset] |= mask;
         else
@@ -119,93 +117,112 @@ void DrawPoint(int x, int y, bool set) {
 
 void DrawText(int x, int y, char letter) {
     int index = 5 * (letter - 32);
-    for (int h = 0; h < 5; h++) {
-        for (int v = 0; v < 8; v++) {
-            int show = (font[index + h] & (1 << v)) != 0;
-            DrawPoint(x + h, y + v, show);
-        }
-    }
+
+    for (int h = 0; h < 5; h++)
+        for (int v = 0; v < 8; v++)
+            DrawPoint(x + h, y + v, (font[index + h] & (1 << v)) != 0);
+
     // clear the space between characters
-    for(int i = 0; i < 8; i++)
+    for (int i = 0; i < 8; i++)
         DrawPoint(x + 5, y + i, 0);
 }
 void DrawString(int x, int y, std::string text) {
     for (size_t i = 0; i < text.length(); i++) {
         if (text[i] >= 32) {
             DrawText(x, y, text[i]);
+
             x += 6;
         }
     }
 }
 
-// Simple buttons test
 void TestButtons() {
-    if(brain.buttonUp.isPressed())
+    if (brain.buttonUp.isPressed())
         DrawString(1, 40, "UP   ");
-    if(brain.buttonLeft.isPressed())
+
+    if (brain.buttonLeft.isPressed())
         DrawString(1, 40, "LEFT ");
-    if(brain.buttonRight.isPressed())
+
+    if (brain.buttonRight.isPressed())
         DrawString(1, 40, "RIGHT");
-    if(brain.buttonDown.isPressed())
+
+    if (brain.buttonDown.isPressed())
         DrawString(1, 40, "DOWN ");
+
 }
 
 void TestBuzzer() {
     // Turn the buzzer on at 1800hz for 300ms
+
     int frequency = 1800;
+
     brain.io.buzzer.setAnalogValue(512); //per https://github.com/Microsoft/pxt-brainpad/blob/master/libs/music/music.cpp#L48
     brain.io.buzzer.setAnalogPeriodUs(1000000 / frequency);
+
     brain.sleep(300);
+
     brain.io.buzzer.setAnalogValue(0);
 }
 
 void TestLightBulb() {
     // Slowley turn the LED on
-    for(int i = 0; i < 10; i++) {
+
+    for (int i = 0; i < 10; i++) {
         brain.io.ledBlue.setAnalogValue(i * 100);
         brain.sleep(200);
     }
-    // Turn it off
+
     brain.io.ledBlue.setAnalogValue(0);
 }
 
-// show the light level on the screen
 void TestLightSensor() {
+    // Show the light level on the screen
     // see: https://github.com/Microsoft/pxt-common-packages/blob/master/libs/lightsensor/lightsensor.cpp#L48
+
     int light = brain.io.lightPin.getAnalogValue() / 16; // returned values are 16K max, change to 1K max.
+
     std::string l = "L:" + std::to_string(light) + "  ";
+
     DrawString(1, 20, l);
-    // writeScreenBuffer is in the main loop
 }
 
-// show temp in Celisius
 void TestTemperatureSensor() {
-    int temper = (((brain.io.temperaturePin.getAnalogValue() / 16383.0) * 3300) - 450) / 19.5; // normalize to 10 bits output
-    std::string t = "T:" + std::to_string(temper) + "  ";
+    // Show temp in celsius
+
+    int temp = (((brain.io.temperaturePin.getAnalogValue() / 16383.0) * 3300) - 450) / 19.5;
+
+    std::string t = "T:" + std::to_string(temp) + "  ";
+
     DrawString(1, 1, t);
-    // writeScreenBuffer is in the main loop
 }
 
-// requires servo motor on servo pins #1
 void TestServo() {
+    // Requires servo motor on servo pins #1
+
     brain.io.servoOne.setServoValue(180);
     brain.sleep(200);
+
     brain.io.servoOne.setServoValue(90);
     brain.sleep(200);
+
     brain.io.servoOne.setServoValue(0);
     brain.sleep(200);
 }
 
 int main() {
     brain.init();
+
     TestServo();
     TestBuzzer();
     TestLightBulb();
+
     while (true) {
         TestButtons();
         TestTemperatureSensor();
         TestLightSensor();
-        brain.lcd.writeScreenBuffer(vram); 
+
+        brain.lcd.writeScreenBuffer(vram);
     }
+
     return 0;
 }

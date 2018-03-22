@@ -62,7 +62,6 @@ namespace codal
     class BrainPad : public CodalComponent
     {
         public:
-
             codal::_mbed::Timer         timer;
             MessageBus                  messageBus;
             BrainPadIO                  io;

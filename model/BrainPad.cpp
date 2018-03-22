@@ -45,13 +45,10 @@ BrainPad::BrainPad() :
     buttonDown(io.buttonDown, ID_PIN_BUTTON_DOWN, DEVICE_BUTTON_ALL_EVENTS, ACTIVE_LOW, PullMode::Up),
     buttonLeft(io.buttonLeft, ID_PIN_BUTTON_LEFT, DEVICE_BUTTON_ALL_EVENTS, ACTIVE_LOW, PullMode::Up),
     buttonRight(io.buttonRight, ID_PIN_BUTTON_RIGHT, DEVICE_BUTTON_ALL_EVENTS, ACTIVE_LOW, PullMode::Up)
-
 {
     // Clear our status
     status = 0;
 
-    // Configure serial port for debugging
-    //serial.set_flow_control(mbed::Serial::Disabled);
     device_instance = this;
 }
 
