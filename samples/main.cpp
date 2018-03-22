@@ -126,6 +126,7 @@ void DrawText(int x, int y, char letter) {
     for (int i = 0; i < 8; i++)
         DrawPoint(x + 5, y + i, 0);
 }
+
 void DrawString(int x, int y, std::string text) {
     for (size_t i = 0; i < text.length(); i++) {
         if (text[i] >= 32) {
