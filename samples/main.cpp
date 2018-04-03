@@ -214,11 +214,9 @@ void TestBrainPadPinTemperature() {
 
 int main() {
     brain.init();
-
     while (true) {
         TestBrainPadPinLight();
         TestBrainPadPinTemperature();
-
         brain.lcd.writeScreenBuffer(vram);
     }
 
