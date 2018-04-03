@@ -210,19 +210,32 @@ void TestServo() {
     brain.sleep(200);
 }
 
+void TestBrainPadPinLight() {
+    // see: https://github.com/Microsoft/pxt-common-packages/blob/master/libs/lightsensor/lightsensor.cpp#L48
+    int light = brain.io.lightPin.getAnalogValue() / 4;
+    std::string l = "L:" + std::to_string(light) + "  ";
+    DrawString(1, 20, l);
+    // writeScreenBuffer is in the main loop
+}
+
+// show temp in Celisius
+void TestBrainPadPinTemperature() {
+    int temper = ((brain.io.temperaturePin.getAnalogValue() * 3.3) - 450) / 19.5;
+    std::string t = "T:" + std::to_string(temper) + "  ";
+    DrawString(1, 1, t);
+    // writeScreenBuffer is in the main loop
+}
+
 int main() {
     brain.init();
-
     TestServo();
     TestBuzzer();
     TestLightBulb();
-
     while (true) {
         TestButtons();
         TestTemperatureSensor();
         TestLightSensor();
-
-        brain.lcd.writeScreenBuffer(vram);
+        brain.lcd.writeScreenBuffer(vram); 
     }
 
     return 0;
