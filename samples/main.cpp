@@ -190,7 +190,7 @@ void TestLightSensor() {
 void TestTemperatureSensor() {
     // Show temp in celsius
 
-    int temper = ((brain.io.temperaturePin.getAnalogValue() * 3.3) - 450) / 19.5;
+    int temp = ((brain.io.temperaturePin.getAnalogValue() * 3.3) - 450) / 19.5;
 
     std::string t = "T:" + std::to_string(temp) + "  ";
 
