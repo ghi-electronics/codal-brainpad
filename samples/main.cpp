@@ -176,27 +176,6 @@ void TestLightBulb() {
     brain.io.ledBlue.setAnalogValue(0);
 }
 
-void TestLightSensor() {
-    // Show the light level on the screen
-    // see: https://github.com/Microsoft/pxt-common-packages/blob/master/libs/lightsensor/lightsensor.cpp#L48
-
-    int light = brain.io.lightPin.getAnalogValue() / 16; // returned values are 16K max, change to 1K max.
-
-    std::string l = "L:" + std::to_string(light) + "  ";
-
-    DrawString(1, 20, l);
-}
-
-void TestTemperatureSensor() {
-    // Show temp in celsius
-
-    int temp = (((brain.io.temperaturePin.getAnalogValue() / 16383.0) * 3300) - 450) / 19.5;
-
-    std::string t = "T:" + std::to_string(temp) + "  ";
-
-    DrawString(1, 1, t);
-}
-
 void TestServo() {
     // Requires servo motor on servo pins #1
 
@@ -228,13 +207,11 @@ void TestBrainPadPinTemperature() {
 
 int main() {
     brain.init();
-    TestServo();
-    TestBuzzer();
-    TestLightBulb();
+
     while (true) {
-        TestButtons();
-        TestTemperatureSensor();
-        TestLightSensor();
+        TestBrainPadPinLight();
+        TestBrainPadPinTemperature();
+
         brain.lcd.writeScreenBuffer(vram); 
     }
 
