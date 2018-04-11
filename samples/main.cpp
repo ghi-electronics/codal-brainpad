@@ -210,6 +210,42 @@ void TestServo() {
     brain.sleep(200);
 }
 
+void TestAccelerometer() {
+    int xAxis = brain.accelerometer.getX();
+    int yAxis = brain.accelerometer.getY();
+    int zAxis = brain.accelerometer.getZ();
+
+    if (brain.accelerometer.getGesture() == ACCELEROMETER_EVT_FACE_DOWN)
+        DrawString(1, 36, "FACE DOWN ");
+    if (brain.accelerometer.getGesture() == ACCELEROMETER_EVT_TILT_RIGHT)
+        DrawString(1, 36, "TILT RIGHT");
+    if (brain.accelerometer.getGesture() == ACCELEROMETER_EVT_TILT_UP)
+        DrawString(1, 36, "TILT UP   ");
+    if (brain.accelerometer.getGesture() == ACCELEROMETER_EVT_SHAKE)
+        DrawString(1, 36, "SHAKE     ");
+    if (brain.accelerometer.getGesture() == ACCELEROMETER_EVT_TILT_DOWN)
+        DrawString(1, 36, "TILT DOWN ");
+    if (brain.accelerometer.getGesture() == ACCELEROMETER_EVT_TILT_LEFT)
+        DrawString(1, 36, "TILT LEFT ");
+    if (brain.accelerometer.getGesture() == ACCELEROMETER_EVT_FACE_UP)
+        DrawString(1, 36, "FACE UP   ");
+    if (brain.accelerometer.getGesture() == ACCELEROMETER_EVT_FREEFALL)
+        DrawString(1, 36, "FREEFALL  ");
+    if (brain.accelerometer.getGesture() == ACCELEROMETER_EVT_3G)
+        DrawString(1, 36, "EVT_3G    ");
+    if (brain.accelerometer.getGesture() == ACCELEROMETER_EVT_8G)
+        DrawString(1, 36, "EVT_8G    ");
+
+    std::string x = "X:" + std::to_string(xAxis) + "       ";
+    DrawString(1, 1, x);
+
+    std::string y = "Y:" + std::to_string(yAxis) + "       ";
+    DrawString(1, 12, y);
+
+    std::string z = "Z:" + std::to_string(zAxis) + "       ";
+    DrawString(1, 24, z);
+}
+
 int main() {
     brain.init();
 
@@ -218,9 +254,7 @@ int main() {
     TestLightBulb();
 
     while (true) {
-        TestButtons();
-        TestTemperatureSensor();
-        TestLightSensor();
+        TestAccelerometer();
 
         brain.lcd.writeScreenBuffer(vram);
     }
