@@ -53,9 +53,9 @@ namespace codal {
         MMA8453(Pin& sda, Pin& scl, Pin& int1, CoordinateSpace& coordinateSpace, uint16_t address = MMA8453_DEFAULT_ADDR, uint16_t id = DEVICE_ID_ACCELEROMETER);
         ~MMA8453();
 
-        virtual void idleCallback();
         virtual int configure();
         virtual int requestUpdate();
+        virtual void idleCallback();
     };
 }
 

@@ -23,6 +23,55 @@ MMA8453::MMA8453(Pin& sda, Pin& scl, Pin& int1, CoordinateSpace& coordinateSpace
     configure();
 }
 
+MMA8453::~MMA8453() {
+
+}
+
+void MMA8453::writeRegister(uint8_t reg, uint8_t val) {
+    uint8_t data[2];
+
+    data[0] = reg;
+    data[1] = val;
+
+    i2c.write(address, data, 2, 0);
+}
+
+int MMA8453::updateSample() {
+    uint8_t data[6];
+    int sensitivity, divisor, offset;
+
+    switch (this->getRange()) {
+        default:
+        case 2: sensitivity = 256; divisor = 2048; offset = 4096; break;
+        case 4: sensitivity = 128; divisor = 4096; offset = 8192; break;
+        case 8: sensitivity = 64; divisor = 8192; offset = 16384; break;
+    }
+
+    if (int1.getDigitalValue() == 0) {
+        i2c.read(address, OUT_X_MSB, data, 6);
+
+        sample.x = (data[0] << 2) | (data[1] >> 6);
+        sample.y = (data[2] << 2) | (data[3] >> 6);
+        sample.z = (data[4] << 2) | (data[5] >> 6);
+
+        sample.x = (sample.x * 1000) / sensitivity;
+        if (sample.x > divisor)
+            sample.x -= offset;
+
+        sample.y = (sample.y * 1000) / sensitivity;
+        if (sample.y > divisor)
+            sample.y -= offset;
+
+        sample.z = (sample.z * 1000) / sensitivity;
+        if (sample.z > divisor)
+            sample.z -= offset;
+
+        update(sample);
+    }
+
+    return DEVICE_OK;
+}
+
 int MMA8453::configure() {
     writeRegister(CTRL_REG1, CTRL_REG1_SLEEP);
     writeRegister(CTRL_REG2, CTRL_REG2_RESET);
@@ -36,61 +85,12 @@ int MMA8453::configure() {
     return DEVICE_OK;
 }
 
-void MMA8453::writeRegister(uint8_t reg, uint8_t val) {
-    uint8_t data[2];
-
-    data[0] = reg;
-    data[1] = val;
-
-    i2c.write(address, data, 2, 0);
-}
-
 int MMA8453::requestUpdate() {
     updateSample();
 
     return DEVICE_OK;
 }
 
-int MMA8453::updateSample() {
-    uint8_t data[6];
-    int sensitivity, divisor, offset;
-
-    switch (this->getRange()) {
-        default:
-        case 2: sensitivity = 256; divisor = 2048; offset = 4096; break;
-        case 4: sensitivity= 128; divisor = 4096; offset = 8192; break;
-        case 8: sensitivity= 64; divisor = 8192; offset = 16384; break;
-    }
-
-    if (int1.getDigitalValue() == 0) {
-        i2c.read(address, OUT_X_MSB, data, 6);
-
-        sample.x = (data[0] << 2) | (data[1] >> 6);
-        sample.y = (data[2] << 2) | (data[3] >> 6);
-        sample.z = (data[4] << 2) | (data[5] >> 6);
-
-        sample.x = (sample.x * 1000) / sensitivity;
-        if(sample.x > divisor)
-            sample.x -= offset;
-
-        sample.y = (sample.y * 1000) / sensitivity;
-        if(sample.y > divisor)
-            sample.y -= offset;
-
-        sample.z = (sample.z * 1000) / sensitivity;
-        if(sample.z > divisor)
-            sample.z -= offset;
-
-        update(sample);
-    }
-
-    return DEVICE_OK;
-};
-
 void MMA8453::idleCallback() {
     updateSample();
-}
-
-MMA8453::~MMA8453() {
-
 }
