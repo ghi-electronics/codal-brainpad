@@ -38,13 +38,13 @@ void MMA8453::writeRegister(uint8_t reg, uint8_t val) {
 
 int MMA8453::updateSample() {
     uint8_t data[6];
-    int sensitivity, divisor, offset;
+    int overflow, divisor;
 
     switch (this->getRange()) {
         default:
-        case 2: sensitivity = 256; divisor = 2048; offset = 4096; break;
-        case 4: sensitivity = 128; divisor = 4096; offset = 8192; break;
-        case 8: sensitivity = 64; divisor = 8192; offset = 16384; break;
+        case 2: divisor = 256; break;
+        case 4: divisor = 128; break;
+        case 8: divisor = 64; break;
     }
 
     if (int1.getDigitalValue() == 0) {
@@ -54,17 +54,18 @@ int MMA8453::updateSample() {
         sample.y = (data[2] << 2) | (data[3] >> 6);
         sample.z = (data[4] << 2) | (data[5] >> 6);
 
-        sample.x = (sample.x * 1000) / sensitivity;
-        if (sample.x > divisor)
-            sample.x -= offset;
+        if (sample.x >= 512) sample.x -= 1024;
+        if (sample.y >= 512) sample.y -= 1024;
+        if (sample.z >= 512) sample.z -= 1024;
 
-        sample.y = (sample.y * 1000) / sensitivity;
-        if (sample.y > divisor)
-            sample.y -= offset;
+        sample.x *= 1000;
+        sample.x /= divisor;
 
-        sample.z = (sample.z * 1000) / sensitivity;
-        if (sample.z > divisor)
-            sample.z -= offset;
+        sample.y *= 1000;
+        sample.y /= divisor;
+
+        sample.z *= 1000;
+        sample.z /= divisor;
 
         update(sample);
     }
