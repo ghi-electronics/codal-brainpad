@@ -177,10 +177,7 @@ void TestLightBulb() {
 }
 
 void TestLightSensor() {
-    // Show the light level on the screen
-    // see: https://github.com/Microsoft/pxt-common-packages/blob/master/libs/lightsensor/lightsensor.cpp#L48
-
-    int light = brain.io.lightPin.getAnalogValue() / 4; // returned values are 16K max, change to 1K max.
+    int light = brain.lightSensor.readLightLevel();
 
     std::string l = "L:" + std::to_string(light) + "  ";
 
@@ -188,9 +185,7 @@ void TestLightSensor() {
 }
 
 void TestTemperatureSensor() {
-    // Show temp in celsius
-
-    int temp = ((brain.io.temperaturePin.getAnalogValue() * 3.3) - 450) / 19.5;
+    int temp = brain.temperatureSensor.readTemperatureCelsius();
 
     std::string t = "T:" + std::to_string(temp) + "  ";
 

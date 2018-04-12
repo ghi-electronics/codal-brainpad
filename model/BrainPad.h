@@ -47,6 +47,8 @@ DEALINGS IN THE SOFTWARE.
 #include "CodalFiber.h"
 #include "MessageBus.h"
 #include "BrainPadDisplay.h"
+#include "BrainPadTemperatureSensor.h"
+#include "BrainPadLightSensor.h"
 #include "MMA8453.h"
 
 // Status flag values
@@ -73,6 +75,8 @@ namespace codal
             Button                      buttonRight;
             CoordinateSpace             space;
             MMA8453                     accelerometer;
+            BrainPadTemperatureSensor   temperatureSensor;
+            BrainPadLightSensor         lightSensor;
 
             /**
              * Constructor.
