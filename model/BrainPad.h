@@ -49,7 +49,6 @@ DEALINGS IN THE SOFTWARE.
 #include "BrainPadDisplay.h"
 #include "MMA8453.h"
 
-
 // Status flag values
 #define DEVICE_INITIALIZED                    0x01
 

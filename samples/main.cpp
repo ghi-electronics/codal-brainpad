@@ -211,39 +211,36 @@ void TestServo() {
 }
 
 void TestAccelerometer() {
-    int xAxis = brain.accelerometer.getX();
-    int yAxis = brain.accelerometer.getY();
-    int zAxis = brain.accelerometer.getZ();
+    const char* msg = nullptr;
 
-    if (brain.accelerometer.getGesture() == ACCELEROMETER_EVT_FACE_DOWN)
-        DrawString(1, 36, "FACE DOWN ");
-    if (brain.accelerometer.getGesture() == ACCELEROMETER_EVT_TILT_RIGHT)
-        DrawString(1, 36, "TILT RIGHT");
-    if (brain.accelerometer.getGesture() == ACCELEROMETER_EVT_TILT_UP)
-        DrawString(1, 36, "TILT UP   ");
-    if (brain.accelerometer.getGesture() == ACCELEROMETER_EVT_SHAKE)
-        DrawString(1, 36, "SHAKE     ");
-    if (brain.accelerometer.getGesture() == ACCELEROMETER_EVT_TILT_DOWN)
-        DrawString(1, 36, "TILT DOWN ");
-    if (brain.accelerometer.getGesture() == ACCELEROMETER_EVT_TILT_LEFT)
-        DrawString(1, 36, "TILT LEFT ");
-    if (brain.accelerometer.getGesture() == ACCELEROMETER_EVT_FACE_UP)
-        DrawString(1, 36, "FACE UP   ");
-    if (brain.accelerometer.getGesture() == ACCELEROMETER_EVT_FREEFALL)
-        DrawString(1, 36, "FREEFALL  ");
-    if (brain.accelerometer.getGesture() == ACCELEROMETER_EVT_3G)
-        DrawString(1, 36, "EVT_3G    ");
-    if (brain.accelerometer.getGesture() == ACCELEROMETER_EVT_8G)
-        DrawString(1, 36, "EVT_8G    ");
+    int x = brain.accelerometer.getX();
+    int y = brain.accelerometer.getY();
+    int z = brain.accelerometer.getZ();
 
-    std::string x = "X:" + std::to_string(xAxis) + "       ";
-    DrawString(1, 1, x);
+    switch (brain.accelerometer.getGesture()) {
+        case ACCELEROMETER_EVT_TILT_RIGHT: msg = "TILT RIGHT"; break;
+        case ACCELEROMETER_EVT_FACE_DOWN: msg = "FACE DOWN "; break;
+        case ACCELEROMETER_EVT_TILT_UP: msg = "TILT UP   "; break;
+        case ACCELEROMETER_EVT_SHAKE: msg = "SHAKE     "; break;
+        case ACCELEROMETER_EVT_TILT_DOWN: msg = "TILT DOWN "; break;
+        case ACCELEROMETER_EVT_TILT_LEFT: msg = "TILT LEFT "; break;
+        case ACCELEROMETER_EVT_FACE_UP: msg = "FACE UP   "; break;
+        case ACCELEROMETER_EVT_FREEFALL: msg = "FREEFALL  "; break;
+        case ACCELEROMETER_EVT_3G: msg = "EVT_3G    "; break;
+        case ACCELEROMETER_EVT_8G: msg = "EVT_8G    "; break;
+    }
 
-    std::string y = "Y:" + std::to_string(yAxis) + "       ";
-    DrawString(1, 12, y);
+    if (msg != nullptr)
+        DrawString(1, 36, msg);
 
-    std::string z = "Z:" + std::to_string(zAxis) + "       ";
-    DrawString(1, 24, z);
+    std::string strX = "X:" + std::to_string(x) + "       ";
+    DrawString(1, 1, strX);
+
+    std::string strY = "Y:" + std::to_string(y) + "       ";
+    DrawString(1, 12, strY);
+
+    std::string strZ = "Z:" + std::to_string(z) + "       ";
+    DrawString(1, 24, strZ);
 }
 
 int main() {
