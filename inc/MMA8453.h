@@ -43,7 +43,6 @@ namespace codal {
         codal::_mbed::I2C i2c;
         Pin&              int1;
         uint16_t          address;
-        uint8_t           sampleRange;
         Sample3D          sample;
 
         void writeRegister(uint8_t reg, uint8_t val);

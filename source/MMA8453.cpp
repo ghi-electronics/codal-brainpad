@@ -25,7 +25,6 @@ MMA8453::MMA8453(Pin& sda, Pin& scl, Pin& int1, CoordinateSpace& coordinateSpace
     this->id = id;
     this->status = 0;
     this->address = address;
-    this->sampleRange = 2;
 
     configure();
 }
