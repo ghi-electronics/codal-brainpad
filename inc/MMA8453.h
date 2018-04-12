@@ -41,22 +41,21 @@
 namespace codal {
     class MMA8453 : public Accelerometer {
         codal::_mbed::I2C i2c;
-        Pin&            int1;               // Data ready interrupt.
-        uint16_t        address;            // I2C address of this accelerometer.
-        uint8_t         sampleRange;        // The sample range of the accelerometer in g.
-        Sample3D        sample;             // The last sample read.
+        Pin&              int1;
+        uint16_t          address;
+        uint8_t           sampleRange;
+        Sample3D          sample;
 
         void writeRegister(uint8_t reg, uint8_t val);
+        int updateSample();
 
     public:
-        MMA8453(Pin& sda, Pin& scl, Pin& int1, CoordinateSpace &coordinateSpace, uint16_t address = MMA8453_DEFAULT_ADDR, uint16_t id = DEVICE_ID_ACCELEROMETER);
+        MMA8453(Pin& sda, Pin& scl, Pin& int1, CoordinateSpace& coordinateSpace, uint16_t address = MMA8453_DEFAULT_ADDR, uint16_t id = DEVICE_ID_ACCELEROMETER);
+        ~MMA8453();
 
         virtual void idleCallback();
-        int configure();
-        int updateSample();
+        virtual int configure();
         virtual int requestUpdate();
-
-        ~MMA8453();
     };
 }
 
