@@ -48,7 +48,7 @@ BrainPad::BrainPad() :
     space(CoordinateSystem::NORTH_EAST_UP, true, COORDINATE_SPACE_ROTATED_0),
     accelerometer(io.sda, io.scl, io.interrupt, space),
     temperatureSensor(io.temperaturePin, DEVICE_ID_THERMOMETER),
-    lightSensor(io.lightPin,  DEVICE_ID_LIGHT_SENSOR)
+    lightSensor(io.lightPin, DEVICE_ID_LIGHT_SENSOR)
 {
     // Clear our status
     status = 0;

@@ -3,17 +3,15 @@
 
 #include "Pin.h"
 
-namespace codal
-{
-   class BrainPadLightSensor {
+namespace codal {
+    class BrainPadLightSensor {
         Pin& pin;
 
     public:
-
         BrainPadLightSensor(Pin& pin, uint16_t id);
-        int readLightLevel();
 
-   };
+        int readLightLevel();
+    };
 }
 
 #endif
