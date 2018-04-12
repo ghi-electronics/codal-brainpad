@@ -6,13 +6,13 @@
 
 using namespace codal;
 
-static const KeyValueTableEntry accelerometerRangeData[] = {
+static const KeyValueTableEntry rangeRegisterData[] = {
     { 2, 0x00 },
     { 4, 0x01 },
     { 8, 0x02 },
 };
 
-CREATE_KEY_VALUE_TABLE(accelerometerRange, accelerometerRangeData);
+CREATE_KEY_VALUE_TABLE(rangeRegister, rangeRegisterData);
 
 MMA8453::MMA8453(Pin& sda, Pin& scl, Pin& int1, CoordinateSpace& coordinateSpace, uint16_t address, uint16_t id) : Accelerometer(coordinateSpace, id), i2c(sda, scl), int1(int1), sample() {
     this->id = id;
@@ -78,7 +78,7 @@ int MMA8453::configure() {
     writeRegister(CTRL_REG2, CTRL_REG2_RESET);
     writeRegister(CTRL_REG2, CTRL_REG2_HIGH_RES);
 
-    writeRegister(XYZ_DATA_CFG, accelerometerRange.get(sampleRange));
+    writeRegister(XYZ_DATA_CFG, rangeRegister.get(sampleRange));
     writeRegister(CTRL_REG4, CTRL_REG4_INT_DATA);
     writeRegister(CTRL_REG5, CTRL_REG5_SET_INT_PIN);
     writeRegister(CTRL_REG1, CTRL_REG1_ACTIVE);
