@@ -12,7 +12,14 @@ static const KeyValueTableEntry rangeRegisterData[] = {
     { 8, 0x02 },
 };
 
+static const KeyValueTableEntry rangeDivisorData[] = {
+    { 2, 256 },
+    { 4, 128 },
+    { 8, 64 },
+};
+
 CREATE_KEY_VALUE_TABLE(rangeRegister, rangeRegisterData);
+CREATE_KEY_VALUE_TABLE(rangeDivisor, rangeDivisorData);
 
 MMA8453::MMA8453(Pin& sda, Pin& scl, Pin& int1, CoordinateSpace& coordinateSpace, uint16_t address, uint16_t id) : Accelerometer(coordinateSpace, id), i2c(sda, scl), int1(int1), sample() {
     this->id = id;
@@ -37,15 +44,8 @@ void MMA8453::writeRegister(uint8_t reg, uint8_t val) {
 }
 
 int MMA8453::updateSample() {
+    int divisor = rangeDivisor.get(this->getRange());
     uint8_t data[6];
-    int overflow, divisor;
-
-    switch (this->getRange()) {
-        default:
-        case 2: divisor = 256; break;
-        case 4: divisor = 128; break;
-        case 8: divisor = 64; break;
-    }
 
     if (int1.getDigitalValue() == 0) {
         i2c.read(address, OUT_X_MSB, data, 6);
