@@ -6,7 +6,5 @@ BrainPadTemperatureSensor::BrainPadTemperatureSensor(Pin& pin, uint16_t id) : pi
 }
 
 int BrainPadTemperatureSensor::readTemperatureCelsius() {
-    int value = (((pin.getAnalogValue() / 16383.0) * 3300) - 450) / 19.5;
-
-    return value;
+    return (((pin.getAnalogValue() / 16383.0) * 3300) - 450) / 19.5;
 }

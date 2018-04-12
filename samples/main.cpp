@@ -178,15 +178,16 @@ void TestLightBulb() {
 
 void TestLightSensor() {
     int light = brain.lightSensor.readLightLevel();
+
     std::string l = "L:" + std::to_string(light) + "  ";
 
     DrawString(1, 20, l);
 }
 
-// show temp in Celisius
 void TestTemperatureSensor() {
-    int temper = brain.temperatureSensor.readTemperatureCelsius();
-    std::string t = "T:" + std::to_string(temper) + "  ";
+    int temp = brain.temperatureSensor.readTemperatureCelsius();
+
+    std::string t = "T:" + std::to_string(temp) + "  ";
 
     DrawString(1, 1, t);
 }
