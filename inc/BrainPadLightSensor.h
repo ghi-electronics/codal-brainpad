@@ -1,5 +1,5 @@
-#ifndef BRAINPADLIGHTSENSOR_H
-#define BRAINPADLIGHTSENSOR_H
+#ifndef BPLIGHTSENSOR_H
+#define BPLIGHTSENSOR_H
 
 #include "Pin.h"
 
