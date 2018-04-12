@@ -22,8 +22,6 @@ CREATE_KEY_VALUE_TABLE(rangeRegister, rangeRegisterData);
 CREATE_KEY_VALUE_TABLE(rangeDivisor, rangeDivisorData);
 
 MMA8453::MMA8453(Pin& sda, Pin& scl, Pin& int1, CoordinateSpace& coordinateSpace, uint16_t address, uint16_t id) : Accelerometer(coordinateSpace, id), i2c(sda, scl), int1(int1) {
-    this->id = id;
-    this->status = 0;
     this->address = address;
 
     configure();
