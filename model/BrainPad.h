@@ -73,8 +73,8 @@ namespace codal
             Button                      buttonRight;
             CoordinateSpace             space;
             MMA8453                     accelerometer;
-            TemperatureSensor           temperatureSensor;
-            LightSensor                 lightSensor;
+            BrainPadTemperatureSensor   temperatureSensor;
+            BrainPadLightSensor         lightSensor;
 
             /**
              * Constructor.
