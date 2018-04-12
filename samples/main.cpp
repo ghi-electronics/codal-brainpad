@@ -210,6 +210,39 @@ void TestServo() {
     brain.sleep(200);
 }
 
+void TestAccelerometer() {
+    const char* msg = nullptr;
+
+    int x = brain.accelerometer.getX();
+    int y = brain.accelerometer.getY();
+    int z = brain.accelerometer.getZ();
+
+    switch (brain.accelerometer.getGesture()) {
+        case ACCELEROMETER_EVT_TILT_RIGHT: msg = "TILT RIGHT"; break;
+        case ACCELEROMETER_EVT_FACE_DOWN: msg = "FACE DOWN "; break;
+        case ACCELEROMETER_EVT_TILT_UP: msg = "TILT UP   "; break;
+        case ACCELEROMETER_EVT_SHAKE: msg = "SHAKE     "; break;
+        case ACCELEROMETER_EVT_TILT_DOWN: msg = "TILT DOWN "; break;
+        case ACCELEROMETER_EVT_TILT_LEFT: msg = "TILT LEFT "; break;
+        case ACCELEROMETER_EVT_FACE_UP: msg = "FACE UP   "; break;
+        case ACCELEROMETER_EVT_FREEFALL: msg = "FREEFALL  "; break;
+        case ACCELEROMETER_EVT_3G: msg = "EVT_3G    "; break;
+        case ACCELEROMETER_EVT_8G: msg = "EVT_8G    "; break;
+    }
+
+    if (msg != nullptr)
+        DrawString(1, 36, msg);
+
+    std::string strX = "X:" + std::to_string(x) + "       ";
+    DrawString(1, 1, strX);
+
+    std::string strY = "Y:" + std::to_string(y) + "       ";
+    DrawString(1, 12, strY);
+
+    std::string strZ = "Z:" + std::to_string(z) + "       ";
+    DrawString(1, 24, strZ);
+}
+
 int main() {
     brain.init();
 
@@ -218,9 +251,7 @@ int main() {
     TestLightBulb();
 
     while (true) {
-        TestButtons();
-        TestTemperatureSensor();
-        TestLightSensor();
+        TestAccelerometer();
 
         brain.lcd.writeScreenBuffer(vram);
     }
