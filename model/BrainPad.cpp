@@ -45,7 +45,7 @@ BrainPad::BrainPad() :
     buttonDown(io.buttonDown, ID_PIN_BUTTON_DOWN, DEVICE_BUTTON_ALL_EVENTS, ACTIVE_LOW, PullMode::Up),
     buttonLeft(io.buttonLeft, ID_PIN_BUTTON_LEFT, DEVICE_BUTTON_ALL_EVENTS, ACTIVE_LOW, PullMode::Up),
     buttonRight(io.buttonRight, ID_PIN_BUTTON_RIGHT, DEVICE_BUTTON_ALL_EVENTS, ACTIVE_LOW, PullMode::Up),
-    space(CoordinateSystem::NORTH_EAST_UP, true, COORDINATE_SPACE_ROTATED_0),
+    space(CoordinateSystem::SIMPLE_CARTESIAN, false, COORDINATE_SPACE_ROTATED_0),
     accelerometer(io.sda, io.scl, io.interrupt, space),
     temperatureSensor(io.temperaturePin, DEVICE_ID_THERMOMETER),
     lightSensor(io.lightPin, DEVICE_ID_LIGHT_SENSOR)

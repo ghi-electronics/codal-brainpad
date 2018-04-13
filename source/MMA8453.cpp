@@ -8,14 +8,14 @@ using namespace codal;
 
 static const KeyValueTableEntry rangeRegisterData[] = {
     { 2, 0x00 },
-{ 4, 0x01 },
-{ 8, 0x02 },
+    { 4, 0x01 },
+    { 8, 0x02 },
 };
 
 static const KeyValueTableEntry rangeDivisorData[] = {
     { 2, 256 },
-{ 4, 128 },
-{ 8, 64 },
+    { 4, 128 },
+    { 8, 64 },
 };
 
 CREATE_KEY_VALUE_TABLE(rangeRegister, rangeRegisterData);
@@ -64,7 +64,7 @@ int MMA8453::updateSample() {
         z *= 1000;
         z /= divisor;
 
-        update({ x, y, z });
+        update({ -y, x, -z }); //To transform to ENU
     }
 
     return DEVICE_OK;
