@@ -72,10 +72,8 @@ int MMA8453::updateSample() {
 
 int MMA8453::configure() {
     writeRegister(CTRL_REG1, CTRL_REG1_SLEEP);
-    writeRegister(CTRL_REG2, CTRL_REG2_RESET);
-    writeRegister(CTRL_REG2, CTRL_REG2_HIGH_RES);
 
-    writeRegister(XYZ_DATA_CFG, rangeRegister.get(sampleRange));
+    writeRegister(XYZ_DATA_CFG, rangeRegister.get(getRange()));
     writeRegister(CTRL_REG4, CTRL_REG4_INT_DATA);
     writeRegister(CTRL_REG5, CTRL_REG5_SET_INT_PIN);
     writeRegister(CTRL_REG1, CTRL_REG1_ACTIVE);
