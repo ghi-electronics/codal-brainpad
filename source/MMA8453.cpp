@@ -8,14 +8,14 @@ using namespace codal;
 
 static const KeyValueTableEntry rangeRegisterData[] = {
     { 2, 0x00 },
-    { 4, 0x01 },
-    { 8, 0x02 },
+{ 4, 0x01 },
+{ 8, 0x02 },
 };
 
 static const KeyValueTableEntry rangeDivisorData[] = {
     { 2, 256 },
-    { 4, 128 },
-    { 8, 64 },
+{ 4, 128 },
+{ 8, 64 },
 };
 
 CREATE_KEY_VALUE_TABLE(rangeRegister, rangeRegisterData);
@@ -43,29 +43,28 @@ void MMA8453::writeRegister(uint8_t reg, uint8_t val) {
 int MMA8453::updateSample() {
     int divisor = rangeDivisor.get(this->getRange());
     uint8_t data[6];
-    Sample3D sample;
 
     if (int1.getDigitalValue() == 0) {
         i2c.read(address, OUT_X_MSB, data, 6);
 
-        sample.x = (data[0] << 2) | (data[1] >> 6);
-        sample.y = (data[2] << 2) | (data[3] >> 6);
-        sample.z = (data[4] << 2) | (data[5] >> 6);
+        int32_t x = (data[0] << 2) | (data[1] >> 6);
+        int32_t y = (data[2] << 2) | (data[3] >> 6);
+        int32_t z = (data[4] << 2) | (data[5] >> 6);
 
-        if (sample.x >= 512) sample.x -= 1024;
-        if (sample.y >= 512) sample.y -= 1024;
-        if (sample.z >= 512) sample.z -= 1024;
+        if (x >= 512) x -= 1024;
+        if (y >= 512) y -= 1024;
+        if (z >= 512) z -= 1024;
 
-        sample.x *= 1000;
-        sample.x /= divisor;
+        x *= 1000;
+        x /= divisor;
 
-        sample.y *= 1000;
-        sample.y /= divisor;
+        y *= 1000;
+        y /= divisor;
 
-        sample.z *= 1000;
-        sample.z /= divisor;
+        z *= 1000;
+        z /= divisor;
 
-        update(sample);
+        update({ x, y, z });
     }
 
     return DEVICE_OK;
