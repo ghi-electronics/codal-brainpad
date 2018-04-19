@@ -55,13 +55,13 @@ int MMA8453::updateSample() {
         if (y >= 512) y -= 1024;
         if (z >= 512) z -= 1024;
 
-        x *= 1000;
+        x *= 1024;
         x /= divisor;
 
-        y *= 1000;
+        y *= 1024;
         y /= divisor;
 
-        z *= 1000;
+        z *= 1024;
         z /= divisor;
 
         update({ -y, x, -z }); //To transform to ENU

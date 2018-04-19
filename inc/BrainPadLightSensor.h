@@ -1,14 +1,14 @@
 #ifndef BPLIGHTSENSOR_H
 #define BPLIGHTSENSOR_H
 
-#include "Pin.h"
+#include "BrainPadPin.h"
 
 namespace codal {
     class BrainPadLightSensor {
-        Pin& pin;
+        BrainPadPin& pin;
 
     public:
-        BrainPadLightSensor(Pin& pin, uint16_t id);
+        BrainPadLightSensor(BrainPadPin& pin, uint16_t id);
 
         int readLightLevel();
     };
