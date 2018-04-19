@@ -7,5 +7,5 @@ BrainPadLightSensor::BrainPadLightSensor(BrainPadPin& pin, uint16_t id) : pin(pi
 }
 
 int BrainPadLightSensor::readLightLevel() {
-    return pin.getAnalogValue();
+    return pin.getAnalogValue() >> 2;
 }
