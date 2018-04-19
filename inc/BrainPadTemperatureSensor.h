@@ -1,14 +1,14 @@
 #ifndef BPTEMPERATURESENSOR_H
 #define BPTEMPERATURESENSOR_H
 
-#include "Pin.h"
+#include "BrainPadPin.h"
 
 namespace codal {
     class BrainPadTemperatureSensor {
-        Pin& pin;
+        BrainPadPin& pin;
 
     public:
-        BrainPadTemperatureSensor(Pin& pin, uint16_t id);
+        BrainPadTemperatureSensor(BrainPadPin& pin, uint16_t id);
 
         int readTemperatureCelsius();
     };
