@@ -35,7 +35,6 @@
 #define CTRL_REG2_HIGH_RES    0x01
 #define CTRL_REG4_INT_DATA    0x01
 #define CTRL_REG5_SET_INT_PIN 0x01
-#define CTRL_REG1_ACTIVE      0x01
 
 
 namespace codal {

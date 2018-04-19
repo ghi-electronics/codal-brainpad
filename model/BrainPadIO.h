@@ -85,8 +85,8 @@ namespace codal
 
             _mbed::Pin        scl;
             _mbed::Pin        sda;
-            _mbed::Pin        temperaturePin;
-            _mbed::Pin        lightPin;
+           BrainPadPin        temperaturePin;
+           BrainPadPin        lightPin;
             _mbed::Pin        buttonUp;
             _mbed::Pin        buttonDown;
             _mbed::Pin        buttonLeft;
