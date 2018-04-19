@@ -2,7 +2,7 @@
 
 using namespace codal;
 
-BrainPadLightSensor::BrainPadLightSensor(Pin& pin, uint16_t id) : pin(pin) {
+BrainPadLightSensor::BrainPadLightSensor(BrainPadPin& pin, uint16_t id) : pin(pin) {
 
 }
 
