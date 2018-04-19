@@ -12,17 +12,6 @@ static const KeyValueTableEntry rangeRegisterData[] = {
     { 8, 0x02 },
 };
 
-static const KeyValueTableEntry periodRegisterData[] = {
-    { 1,   0x39 },
-    { 6,   0x31 },
-    { 12,  0x29 },
-    { 50,  0x21 },
-    { 100, 0x19 },
-    { 200, 0x11 },
-    { 400, 0x09 },
-    { 800, 0x01 },
-};
-
 static const KeyValueTableEntry rangeDivisorData[] = {
     { 2, 256 },
     { 4, 128 },
@@ -30,12 +19,10 @@ static const KeyValueTableEntry rangeDivisorData[] = {
 };
 
 CREATE_KEY_VALUE_TABLE(rangeRegister, rangeRegisterData);
-CREATE_KEY_VALUE_TABLE(periodRegister, periodRegisterData);
 CREATE_KEY_VALUE_TABLE(rangeDivisor, rangeDivisorData);
 
 MMA8453::MMA8453(Pin& sda, Pin& scl, Pin& int1, CoordinateSpace& coordinateSpace, uint16_t address, uint16_t id) : Accelerometer(coordinateSpace, id), i2c(sda, scl), int1(int1) {
     this->address = address;
-    this->samplePeriod = 800;
 
     configure();
 }
@@ -89,7 +76,7 @@ int MMA8453::configure() {
     writeRegister(XYZ_DATA_CFG, rangeRegister.get(getRange()));
     writeRegister(CTRL_REG4, CTRL_REG4_INT_DATA);
     writeRegister(CTRL_REG5, CTRL_REG5_SET_INT_PIN);
-    writeRegister(CTRL_REG1, periodRegister.get(getPeriod()));
+    writeRegister(CTRL_REG1, CTRL_REG1_ACTIVE);
 
     return DEVICE_OK;
 }
