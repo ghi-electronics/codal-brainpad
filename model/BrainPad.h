@@ -68,6 +68,7 @@ namespace codal
             codal::_mbed::Timer         timer;
             MessageBus                  messageBus;
             BrainPadIO                  io;
+            codal::_mbed::I2C           i2c;
             BrainPadDisplay             lcd;
             Button                      buttonUp;
             Button                      buttonDown;
