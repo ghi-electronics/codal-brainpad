@@ -21,7 +21,8 @@ static const KeyValueTableEntry rangeDivisorData[] = {
 CREATE_KEY_VALUE_TABLE(rangeRegister, rangeRegisterData);
 CREATE_KEY_VALUE_TABLE(rangeDivisor, rangeDivisorData);
 
-MMA8453::MMA8453(Pin& sda, Pin& scl, Pin& int1, CoordinateSpace& coordinateSpace, uint16_t address, uint16_t id) : Accelerometer(coordinateSpace, id), i2c(sda, scl), int1(int1) {
+MMA8453::MMA8453(codal::_mbed::I2C& _i2c, Pin& _int1, CoordinateSpace& coordinateSpace, uint16_t address, uint16_t id) : Accelerometer(coordinateSpace, id), i2c(_i2c), int1(_int1) {
+
     this->address = address;
 
     configure();
