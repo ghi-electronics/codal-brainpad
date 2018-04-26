@@ -19,7 +19,7 @@ namespace codal {
         void flush();
 
     public:
-        BrainPadDisplay(Pin& sda, Pin& scl);
+        BrainPadDisplay(codal::I2C& _i2c);
 
         void writeScreenBuffer(uint8_t* buffer);
     };
