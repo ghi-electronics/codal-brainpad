@@ -40,7 +40,7 @@
 
 namespace codal {
     class MMA8453 : public Accelerometer {
-        codal::_mbed::I2C i2c;
+        codal::_mbed::I2C& i2c;
         Pin&              int1;
         uint16_t          address;
 

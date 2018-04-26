@@ -1,7 +1,7 @@
 #ifndef BPDISPLAY_H
 #define BPDISPLAY_H
 
-#include "MbedI2C.h"
+#include "I2C.h"
 
 #include <cstdint>
 
@@ -10,7 +10,7 @@ namespace codal {
         static const int deviceAddress = 0x78;
         static const size_t vramSize = (128 * 64 / 8) + 1;
 
-        codal::_mbed::I2C i2c;
+        codal::I2C& i2c;
         uint8_t data[2];
         uint8_t vram[vramSize];
 
