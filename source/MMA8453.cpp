@@ -46,7 +46,7 @@ int MMA8453::updateSample() {
     uint8_t data[6];
 
     if (int1.getDigitalValue() == 0) {
-        i2c.read(address, OUT_X_MSB, data, 6);
+        i2c.readRegister(address, OUT_X_MSB, data, 6);
 
         int32_t x = (data[0] << 2) | (data[1] >> 6);
         int32_t y = (data[2] << 2) | (data[3] >> 6);
