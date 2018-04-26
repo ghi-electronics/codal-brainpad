@@ -5,7 +5,7 @@ using namespace codal;
 const int BrainPadDisplay::deviceAddress;
 const size_t BrainPadDisplay::vramSize;
 
-BrainPadDisplay::BrainPadDisplay(Pin& sda, Pin& scl) : i2c(sda, scl) {
+BrainPadDisplay::BrainPadDisplay(codal::I2C& _i2c) : i2c(_i2c) {
     writeCommand(0xae);// turn off oled panel
     writeCommand(0x00);// set low column address
     writeCommand(0x10);// set high column address
