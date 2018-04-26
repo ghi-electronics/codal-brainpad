@@ -3,7 +3,7 @@
 
 #include "CoordinateSystem.h"
 #include "Pin.h"
-#include "MbedI2C.h"
+#include "I2C.h"
 #include "Accelerometer.h"
 
 #define MMA8453_DEFAULT_ADDR  0x38
@@ -40,7 +40,7 @@
 
 namespace codal {
     class MMA8453 : public Accelerometer {
-        codal::_mbed::I2C& i2c;
+        I2C& i2c;
         Pin&              int1;
         uint16_t          address;
 
@@ -48,7 +48,7 @@ namespace codal {
         int updateSample();
 
     public:
-        MMA8453(codal::_mbed::I2C& _i2c, Pin& int1, CoordinateSpace& coordinateSpace, uint16_t address = MMA8453_DEFAULT_ADDR, uint16_t id = DEVICE_ID_ACCELEROMETER);
+        MMA8453(I2C& _i2c, Pin& int1, CoordinateSpace& coordinateSpace, uint16_t address = MMA8453_DEFAULT_ADDR, uint16_t id = DEVICE_ID_ACCELEROMETER);
         ~MMA8453();
 
         virtual int configure();
