@@ -32,15 +32,6 @@ MMA8453::~MMA8453() {
 
 }
 
-void MMA8453::writeRegister(uint8_t reg, uint8_t val) {
-    uint8_t data[2];
-
-    data[0] = reg;
-    data[1] = val;
-
-    i2c.write(address, data, 2, 0);
-}
-
 int MMA8453::updateSample() {
     int divisor = rangeDivisor.get(this->getRange());
     uint8_t data[6];
@@ -72,12 +63,12 @@ int MMA8453::updateSample() {
 }
 
 int MMA8453::configure() {
-    writeRegister(CTRL_REG1, CTRL_REG1_SLEEP);
+    i2c.writeRegister(address, CTRL_REG1, CTRL_REG1_SLEEP);
 
-    writeRegister(XYZ_DATA_CFG, rangeRegister.get(getRange()));
-    writeRegister(CTRL_REG4, CTRL_REG4_INT_DATA);
-    writeRegister(CTRL_REG5, CTRL_REG5_SET_INT_PIN);
-    writeRegister(CTRL_REG1, CTRL_REG1_ACTIVE);
+    i2c.writeRegister(address, XYZ_DATA_CFG, rangeRegister.get(getRange()));
+    i2c.writeRegister(address, CTRL_REG4, CTRL_REG4_INT_DATA);
+    i2c.writeRegister(address, CTRL_REG5, CTRL_REG5_SET_INT_PIN);
+    i2c.writeRegister(address, CTRL_REG1, CTRL_REG1_ACTIVE);
 
     return DEVICE_OK;
 }

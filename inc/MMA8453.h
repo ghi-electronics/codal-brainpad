@@ -40,17 +40,15 @@
 
 namespace codal {
     class MMA8453 : public Accelerometer {
-        I2C& i2c;
+        codal::I2C&       i2c;
         Pin&              int1;
         uint16_t          address;
-
-        void writeRegister(uint8_t reg, uint8_t val);
-        int updateSample();
 
     public:
         MMA8453(codal::I2C& _i2c, Pin& int1, CoordinateSpace& coordinateSpace, uint16_t address = MMA8453_DEFAULT_ADDR, uint16_t id = DEVICE_ID_ACCELEROMETER);
         ~MMA8453();
 
+        int updateSample();
         virtual int configure();
         virtual int requestUpdate();
         virtual void idleCallback();
