@@ -72,6 +72,3 @@ void BrainPadDisplay::writeScreenBuffer(uint8_t* buffer) {
     memcpy(vram + 1, buffer, vramSize - 1);
     flush();
 }
-
-    flush();
-}
