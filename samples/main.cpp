@@ -103,28 +103,16 @@ uint8_t* font = new uint8_t[95 * 5] {
     0x08, 0x08, 0x2a, 0x1c, 0x08  /* ~ */
 };
 
-void DrawPoint(int x, int y, bool set) {
-    if (x >= 0 && x < 128 && y >= 0 && y < 64) {
-        int offset = y * 16 + x / 8;
-        int mask = 0x80 >> (x & 7);
-
-        if (set)
-            vram[offset] |= mask;
-        else
-            vram[offset] &= ~mask;
-    }
-}
-
 void DrawText(int x, int y, char letter) {
     int index = 5 * (letter - 32);
 
     for (int h = 0; h < 5; h++)
         for (int v = 0; v < 8; v++)
-            DrawPoint(x + h, y + v, (font[index + h] & (1 << v)) != 0);
+            brain.lcd.drawPoint(x + h, y + v, (font[index + h] & (1 << v)) != 0);
 
     // clear the space between characters
     for (int i = 0; i < 8; i++)
-        DrawPoint(x + 5, y + i, 0);
+        brain.lcd.drawPoint(x + 5, y + i, 0);
 }
 
 void DrawString(int x, int y, std::string text) {
@@ -248,7 +236,7 @@ int main() {
     while (true) {
         TestAccelerometer();
 
-        brain.lcd.writeScreenBuffer(vram);
+        brain.lcd.flush();
     }
 
     return 0;
