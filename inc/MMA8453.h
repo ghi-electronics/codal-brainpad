@@ -44,6 +44,11 @@ namespace codal {
         Pin&              int1;
         uint16_t          address;
 
+<<<<<<< HEAD
+=======
+        void writeRegister(uint8_t reg, uint8_t val);
+
+>>>>>>> master
     public:
         MMA8453(codal::I2C& _i2c, Pin& int1, CoordinateSpace& coordinateSpace, uint16_t address = MMA8453_DEFAULT_ADDR, uint16_t id = DEVICE_ID_ACCELEROMETER);
         ~MMA8453();
