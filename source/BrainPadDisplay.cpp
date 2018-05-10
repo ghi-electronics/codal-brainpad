@@ -2,11 +2,10 @@
 
 using namespace codal;
 
-const int BrainPadDisplay::vramSize;
+const int BrainPadDisplay::deviceAddress;
+const size_t BrainPadDisplay::vramSize;
 
-BrainPadDisplay::BrainPadDisplay(codal::I2C& _i2c, uint16_t address) : i2c(_i2c) {
-    this->address = address;
-
+BrainPadDisplay::BrainPadDisplay(codal::I2C& _i2c) : i2c(_i2c) {
     writeCommand(0xae);// turn off oled panel
     writeCommand(0x00);// set low column address
     writeCommand(0x10);// set high column address
@@ -53,7 +52,7 @@ void BrainPadDisplay::writeCommand(int cmd) {
     data[0] = 0;
     data[1] = static_cast<uint8_t>(cmd);
 
-    i2c.write(address, data, 2, false);
+    i2c.write(BrainPadDisplay::deviceAddress, data, 2, 0);
 }
 
 void BrainPadDisplay::drawNativePixel(int x, int y, bool set) {
@@ -66,18 +65,13 @@ void BrainPadDisplay::drawNativePixel(int x, int y, bool set) {
 }
 
 void BrainPadDisplay::flush() {
-    i2c.write(address, vram, BrainPadDisplay::vramSize, false);
+    i2c.write(BrainPadDisplay::deviceAddress, vram, BrainPadDisplay::vramSize, 0);
 }
 
 void BrainPadDisplay::writeScreenBuffer(uint8_t* buffer) {
-    for (int x = 0; x < 128; x++) {
-        for (int y = 0; y < 64; y++) {
-            int offset = y * 16 + x / 8;
-            int mask = 0x80 >> (x & 7);
-
-            drawNativePixel(x, y, (buffer[offset] & mask) > 0);
-        }
-    }
+    memcpy(vram + 1, buffer, vramSize - 1);
+    flush();
+}
 
     flush();
 }
