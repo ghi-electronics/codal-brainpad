@@ -14,9 +14,7 @@ namespace codal {
         uint8_t data[2];
         uint8_t vram[vramSize];
 
-        void drawNativePixel(int x, int y, bool set);
         void writeCommand(int cmd);
-        void flush();
 
     public:
         BrainPadDisplay(codal::I2C& _i2c);

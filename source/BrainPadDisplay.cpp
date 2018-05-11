@@ -55,7 +55,7 @@ void BrainPadDisplay::writeCommand(int cmd) {
     i2c.write(BrainPadDisplay::deviceAddress, data, 2, 0);
 }
 
-void BrainPadDisplay::drawNativePixel(int x, int y, bool set) {
+void BrainPadDisplay::drawPoint(int x, int y, bool set) {
     int index = (x + (y / 8) * 128) + 1;
 
     if (set)
