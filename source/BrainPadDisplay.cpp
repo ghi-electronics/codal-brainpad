@@ -69,14 +69,6 @@ void BrainPadDisplay::flush() {
 }
 
 void BrainPadDisplay::writeScreenBuffer(uint8_t* buffer) {
-    for (int x = 0; x < 128; x++) {
-        for (int y = 0; y < 64; y++) {
-            int offset = y * 16 + x / 8;
-            int mask = 0x80 >> (x & 7);
-
-            drawNativePixel(x, y, (buffer[offset] & mask) > 0);
-        }
-    }
-
+    memcpy(vram + 1, buffer, vramSize - 1);
     flush();
 }

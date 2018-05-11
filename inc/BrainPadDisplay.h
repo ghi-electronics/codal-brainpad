@@ -21,6 +21,8 @@ namespace codal {
     public:
         BrainPadDisplay(codal::I2C& _i2c);
 
+        void flush();
+        void drawPoint(int x, int y, bool set);
         void writeScreenBuffer(uint8_t* buffer);
     };
 }
