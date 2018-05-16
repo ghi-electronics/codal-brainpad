@@ -2,10 +2,11 @@
 #define BPLIGHTSENSOR_H
 
 #include "BrainPadPin.h"
+#include "AnalogSensor.h"
 
 namespace codal {
-    class BrainPadLightSensor {
-        BrainPadPin& pin;
+    class BrainPadLightSensor : public codal::AnalogSensor{
+        codal::AnalogSensor* sensor = this;
 
     public:
         BrainPadLightSensor(BrainPadPin& pin, uint16_t id);
