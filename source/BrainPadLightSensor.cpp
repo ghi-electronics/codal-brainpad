@@ -2,10 +2,10 @@
 
 using namespace codal;
 
-BrainPadLightSensor::BrainPadLightSensor(BrainPadPin& pin, uint16_t id) : pin(pin) {
+BrainPadLightSensor::BrainPadLightSensor(BrainPadPin& pin, uint16_t id) : codal::AnalogSensor(pin, id) {
 
 }
 
 int BrainPadLightSensor::readLightLevel() {
-    return pin.getAnalogValue() >> 2;
+    return sensor->getValue() >> 2;
 }

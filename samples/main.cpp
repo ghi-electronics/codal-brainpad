@@ -164,6 +164,8 @@ void TestLightBulb() {
 }
 
 void TestLightSensor() {
+    brain.lightSensor.init();
+    brain.lightSensor.setPeriod(50);
     int light = brain.lightSensor.readLightLevel();
 
     std::string l = "L:" + std::to_string(light) + "  ";
@@ -233,7 +235,7 @@ int main() {
     TestLightBulb();
 
     while (true) {
-        TestAccelerometer();
+        TestLightSensor();
 
         brain.lcd.flush();
     }
