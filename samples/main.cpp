@@ -4,6 +4,7 @@
 
 BrainPad brain;
 
+uint8_t PXTvram[128*64/8];
 uint8_t* font = new uint8_t[95 * 5] {
     0x00, 0x00, 0x00, 0x00, 0x00, /* Space	0x20 */
     0x00, 0x00, 0x4f, 0x00, 0x00, /* ! */
@@ -102,16 +103,25 @@ uint8_t* font = new uint8_t[95 * 5] {
     0x08, 0x08, 0x2a, 0x1c, 0x08  /* ~ */
 };
 
+void DrawPointInPXTFormat(int x, int y, bool set = true) {
+    int index = ( (y / 8) + x * 8) + 1;
+
+    if (set)
+        PXTvram[index] |= static_cast<uint8_t>(1 << (y % 8));
+    else
+        PXTvram[index] &= static_cast<uint8_t>(~(1 << (y % 8)));
+}
+
 void DrawText(int x, int y, char letter) {
     int index = 5 * (letter - 32);
 
     for (int h = 0; h < 5; h++)
         for (int v = 0; v < 8; v++)
-            brain.lcd.drawPoint(x + h, y + v, (font[index + h] & (1 << v)) != 0);
+            DrawPointInPXTFormat(x + h, y + v, (font[index + h] & (1 << v)) != 0);
 
     // clear the space between characters
     for (int i = 0; i < 8; i++)
-        brain.lcd.drawPoint(x + 5, y + i, 0);
+        DrawPointInPXTFormat(x + 5, y + i, 0);
 }
 
 void DrawString(int x, int y, std::string text) {
@@ -227,9 +237,14 @@ void TestAccelerometer() {
     DrawString(1, 24, strZ);
 }
 
+void TestDisplay() {
+    DrawString(0, 0, "Hello!");
+    brain.lcd.writeScreenBuffer(PXTvram);
+}
+
 int main() {
     brain.init();
-
+    TestDisplay();
     TestServo();
     TestBuzzer();
     TestLightBulb();
