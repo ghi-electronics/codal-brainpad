@@ -7,5 +7,5 @@ BrainPadLightSensor::BrainPadLightSensor(BrainPadPin& pin, uint16_t id) : codal:
 }
 
 int BrainPadLightSensor::readLightLevel() {
-    return sensor->getValue() >> 2;
+    return sensor->getValue();
 }

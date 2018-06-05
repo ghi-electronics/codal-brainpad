@@ -251,8 +251,7 @@ int main() {
 
     while (true) {
         TestLightSensor();
-
-        brain.lcd.flush();
+        brain.lcd.writeScreenBuffer(PXTvram);
     }
 
     return 0;
