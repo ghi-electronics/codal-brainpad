@@ -2,10 +2,10 @@
 
 using namespace codal;
 
-BrainPadTemperatureSensor::BrainPadTemperatureSensor(BrainPadPin& pin, uint16_t id) : pin(pin) {
+BrainPadTemperatureSensor::BrainPadTemperatureSensor(BrainPadPin& pin, uint16_t id) : codal::AnalogSensor(pin, id) {
 
 }
 
-int BrainPadTemperatureSensor::readTemperatureCelsius() {
-    return (((pin.getAnalogValue() / 1024.0) * 3300.0) - 400.0) / 19.5;
+int BrainPadTemperatureSensor::getValue() {
+    return (((codal::AnalogSensor::getValue() / 1024.0) * 3300.0) - 400.0) / 19.5;
 }
