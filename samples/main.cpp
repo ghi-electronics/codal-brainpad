@@ -184,11 +184,12 @@ void TestLightSensor() {
 }
 
 void TestTemperatureSensor() {
-    int temp = brain.temperatureSensor.readTemperatureCelsius();
+    brain.temperatureSensor.init();
+    int temp = brain.temperatureSensor.getValue();
 
     std::string t = "T:" + std::to_string(temp) + "  ";
 
-    DrawString(1, 1, t);
+    DrawString(1, 40, t);
 }
 
 void TestServo() {
@@ -250,7 +251,7 @@ int main() {
     TestLightBulb();
 
     while (true) {
-        TestLightSensor();
+        TestTemperatureSensor();
         brain.lcd.writeScreenBuffer(PXTvram);
     }
 
