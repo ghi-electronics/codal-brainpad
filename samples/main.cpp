@@ -174,8 +174,6 @@ void TestLightBulb() {
 }
 
 void TestLightSensor() {
-    brain.lightSensor.init();
-    brain.lightSensor.setPeriod(50);
     int light = brain.lightSensor.readLightLevel();
 
     std::string l = "L:" + std::to_string(light) + "  ";
@@ -184,7 +182,6 @@ void TestLightSensor() {
 }
 
 void TestTemperatureSensor() {
-    brain.temperatureSensor.init();
     int temp = brain.temperatureSensor.getValue();
 
     std::string t = "T:" + std::to_string(temp) + "  ";
@@ -245,12 +242,16 @@ void TestDisplay() {
 
 int main() {
     brain.init();
+    brain.lightSensor.init();
+    brain.lightSensor.setPeriod(50);
+    brain.temperatureSensor.init();
     TestDisplay();
     TestServo();
     TestBuzzer();
     TestLightBulb();
 
     while (true) {
+        TestLightSensor();
         TestTemperatureSensor();
         brain.lcd.writeScreenBuffer(PXTvram);
     }

@@ -7,5 +7,5 @@ BrainPadTemperatureSensor::BrainPadTemperatureSensor(BrainPadPin& pin, uint16_t 
 }
 
 int BrainPadTemperatureSensor::getValue() {
-    return (((sensor->getValue() / 1024.0) * 3300.0) - 450.0) / 19.5;
+    return (((codal::AnalogSensor::getValue() / 1024.0) * 3300.0) - 400.0) / 19.5;
 }
