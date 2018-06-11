@@ -49,9 +49,9 @@ BrainPadDisplay::BrainPadDisplay(codal::I2C& _i2c, uint16_t address) : i2c(_i2c)
     flush();
 }
 
-void BrainPadDisplay::writeCommand(int cmd) {
+void BrainPadDisplay::writeCommand(int command) {
     data[0] = 0;
-    data[1] = static_cast<uint8_t>(cmd);
+    data[1] = static_cast<uint8_t>(command);
 
     i2c.write(address, data, 2, false);
 }

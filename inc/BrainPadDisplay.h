@@ -16,7 +16,7 @@ namespace codal {
         uint8_t vram[vramSize];
         uint16_t address;
 
-        void writeCommand(int cmd);
+        void writeCommand(int command);
         void flush();
 
     public:
