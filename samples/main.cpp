@@ -1,5 +1,6 @@
 #include "BrainPad.h"
 #include "BrainPadDisplay.h"
+
 #include <string>
 
 BrainPad bp;
@@ -146,12 +147,9 @@ void TestButtons() {
 
     if (bp.buttonDown.isPressed())
         DrawString(1, 40, "DOWN ");
-
 }
 
 void TestBuzzer() {
-    // Turn the buzzer on at 1800hz for 300ms
-
     int frequency = 1800;
 
     bp.io.buzzer.setAnalogValue(512); //per https://github.com/Microsoft/pxt-brainpad/blob/master/libs/music/music.cpp#L48
@@ -163,8 +161,6 @@ void TestBuzzer() {
 }
 
 void TestLightBulb() {
-    // Slowley turn the LED on
-
     for (int i = 0; i < 10; i++) {
         bp.io.ledBlue.setAnalogValue(i * 100);
         bp.sleep(200);
@@ -190,8 +186,6 @@ void TestTemperatureSensor() {
 }
 
 void TestServo() {
-    // Requires servo motor on servo pins #1
-
     bp.io.servoOne.setServoValue(180);
     bp.sleep(200);
 
@@ -237,6 +231,7 @@ void TestAccelerometer() {
 
 void TestDisplay() {
     DrawString(0, 0, "Hello!");
+
     bp.lcd.writeScreenBuffer(vram);
 }
 
@@ -245,6 +240,7 @@ int main() {
     bp.lightSensor.init();
     bp.lightSensor.setPeriod(50);
     bp.temperatureSensor.init();
+
     TestDisplay();
     TestServo();
     TestBuzzer();
@@ -253,6 +249,7 @@ int main() {
     while (true) {
         TestLightSensor();
         TestTemperatureSensor();
+
         bp.lcd.writeScreenBuffer(vram);
     }
 
