@@ -5,11 +5,9 @@
 #include "AnalogSensor.h"
 
 namespace codal {
-    class BrainPadLightSensor : public codal::AnalogSensor{
+    class BrainPadLightSensor : public codal::AnalogSensor {
     public:
         BrainPadLightSensor(BrainPadPin& pin, uint16_t id);
-
-        int readLightLevel();
     };
 }
 

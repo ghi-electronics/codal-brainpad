@@ -1,10 +1,11 @@
 #include "BrainPad.h"
 #include "BrainPadDisplay.h"
+
 #include <string>
 
-BrainPad brain;
+BrainPad bp;
 
-uint8_t PXTvram[128*64/8];
+uint8_t vram[128 * 64 / 8];
 uint8_t* font = new uint8_t[95 * 5] {
     0x00, 0x00, 0x00, 0x00, 0x00, /* Space	0x20 */
     0x00, 0x00, 0x4f, 0x00, 0x00, /* ! */
@@ -103,31 +104,31 @@ uint8_t* font = new uint8_t[95 * 5] {
     0x08, 0x08, 0x2a, 0x1c, 0x08  /* ~ */
 };
 
-void DrawPointInPXTFormat(int x, int y, bool set = true) {
-    int index = ( (y / 8) + x * 8) + 1;
+void DrawPixel(int x, int y, bool set = true) {
+    int index = (y / 8) + (x * 8) + 1;
 
     if (set)
-        PXTvram[index] |= static_cast<uint8_t>(1 << (y % 8));
+        vram[index] |= static_cast<uint8_t>(1 << (y % 8));
     else
-        PXTvram[index] &= static_cast<uint8_t>(~(1 << (y % 8)));
+        vram[index] &= static_cast<uint8_t>(~(1 << (y % 8)));
 }
 
-void DrawText(int x, int y, char letter) {
+void DrawCharacter(int x, int y, char letter) {
     int index = 5 * (letter - 32);
 
     for (int h = 0; h < 5; h++)
         for (int v = 0; v < 8; v++)
-            DrawPointInPXTFormat(x + h, y + v, (font[index + h] & (1 << v)) != 0);
+            DrawPixel(x + h, y + v, (font[index + h] & (1 << v)) != 0);
 
     // clear the space between characters
     for (int i = 0; i < 8; i++)
-        DrawPointInPXTFormat(x + 5, y + i, 0);
+        DrawPixel(x + 5, y + i, 0);
 }
 
 void DrawString(int x, int y, std::string text) {
     for (size_t i = 0; i < text.length(); i++) {
         if (text[i] >= 32) {
-            DrawText(x, y, text[i]);
+            DrawCharacter(x, y, text[i]);
 
             x += 6;
         }
@@ -135,81 +136,66 @@ void DrawString(int x, int y, std::string text) {
 }
 
 void TestButtons() {
-    if (brain.buttonUp.isPressed())
+    if (bp.buttonUp.isPressed())
         DrawString(1, 40, "UP   ");
 
-    if (brain.buttonLeft.isPressed())
+    if (bp.buttonLeft.isPressed())
         DrawString(1, 40, "LEFT ");
 
-    if (brain.buttonRight.isPressed())
+    if (bp.buttonRight.isPressed())
         DrawString(1, 40, "RIGHT");
 
-    if (brain.buttonDown.isPressed())
+    if (bp.buttonDown.isPressed())
         DrawString(1, 40, "DOWN ");
-
 }
 
 void TestBuzzer() {
-    // Turn the buzzer on at 1800hz for 300ms
-
     int frequency = 1800;
 
-    brain.io.buzzer.setAnalogValue(512); //per https://github.com/Microsoft/pxt-brainpad/blob/master/libs/music/music.cpp#L48
-    brain.io.buzzer.setAnalogPeriodUs(1000000 / frequency);
+    bp.io.buzzer.setAnalogValue(512); //per https://github.com/Microsoft/pxt-brainpad/blob/master/libs/music/music.cpp#L48
+    bp.io.buzzer.setAnalogPeriodUs(1000000 / frequency);
 
-    brain.sleep(300);
+    bp.sleep(300);
 
-    brain.io.buzzer.setAnalogValue(0);
+    bp.io.buzzer.setAnalogValue(0);
 }
 
 void TestLightBulb() {
-    // Slowley turn the LED on
-
     for (int i = 0; i < 10; i++) {
-        brain.io.ledBlue.setAnalogValue(i * 100);
-        brain.sleep(200);
+        bp.io.ledBlue.setAnalogValue(i * 100);
+        bp.sleep(200);
     }
 
-    brain.io.ledBlue.setAnalogValue(0);
+    bp.io.ledBlue.setAnalogValue(0);
 }
 
 void TestLightSensor() {
-    int light = brain.lightSensor.readLightLevel();
-
-    std::string l = "L:" + std::to_string(light) + "  ";
-
-    DrawString(1, 20, l);
+    DrawString(1, 20, "L:" + std::to_string(bp.lightSensor.readLightLevel()) + "  ");
 }
 
 void TestTemperatureSensor() {
-    int temp = brain.temperatureSensor.getValue();
-
-    std::string t = "T:" + std::to_string(temp) + "  ";
-
-    DrawString(1, 40, t);
+    DrawString(1, 40, "T:" + std::to_string(bp.temperatureSensor.getValue()) + "  ");
 }
 
 void TestServo() {
-    // Requires servo motor on servo pins #1
+    bp.io.servoOne.setServoValue(180);
+    bp.sleep(200);
 
-    brain.io.servoOne.setServoValue(180);
-    brain.sleep(200);
+    bp.io.servoOne.setServoValue(90);
+    bp.sleep(200);
 
-    brain.io.servoOne.setServoValue(90);
-    brain.sleep(200);
-
-    brain.io.servoOne.setServoValue(0);
-    brain.sleep(200);
+    bp.io.servoOne.setServoValue(0);
+    bp.sleep(200);
 }
 
 void TestAccelerometer() {
     const char* msg = nullptr;
 
-    int x = brain.accelerometer.getX();
-    int y = brain.accelerometer.getY();
-    int z = brain.accelerometer.getZ();
+    int x = bp.accelerometer.getX();
+    int y = bp.accelerometer.getY();
+    int z = bp.accelerometer.getZ();
 
-    switch (brain.accelerometer.getGesture()) {
+    switch (bp.accelerometer.getGesture()) {
         case ACCELEROMETER_EVT_TILT_RIGHT: msg = "TILT RIGHT"; break;
         case ACCELEROMETER_EVT_FACE_DOWN: msg = "FACE DOWN "; break;
         case ACCELEROMETER_EVT_TILT_UP: msg = "TILT UP   "; break;
@@ -225,26 +211,23 @@ void TestAccelerometer() {
     if (msg != nullptr)
         DrawString(1, 36, msg);
 
-    std::string strX = "X:" + std::to_string(x) + "       ";
-    DrawString(1, 1, strX);
-
-    std::string strY = "Y:" + std::to_string(y) + "       ";
-    DrawString(1, 12, strY);
-
-    std::string strZ = "Z:" + std::to_string(z) + "       ";
-    DrawString(1, 24, strZ);
+    DrawString(1, 1, "X:" + std::to_string(x) + "       ");
+    DrawString(1, 12, "Y:" + std::to_string(y) + "       ");
+    DrawString(1, 24, "Z:" + std::to_string(z) + "       ");
 }
 
 void TestDisplay() {
     DrawString(0, 0, "Hello!");
-    brain.lcd.writeScreenBuffer(PXTvram);
+
+    bp.lcd.writeScreenBuffer(vram);
 }
 
 int main() {
-    brain.init();
-    brain.lightSensor.init();
-    brain.lightSensor.setPeriod(50);
-    brain.temperatureSensor.init();
+    bp.init();
+    bp.lightSensor.init();
+    bp.lightSensor.setPeriod(50);
+    bp.temperatureSensor.init();
+
     TestDisplay();
     TestServo();
     TestBuzzer();
@@ -253,7 +236,8 @@ int main() {
     while (true) {
         TestLightSensor();
         TestTemperatureSensor();
-        brain.lcd.writeScreenBuffer(PXTvram);
+
+        bp.lcd.writeScreenBuffer(vram);
     }
 
     return 0;
