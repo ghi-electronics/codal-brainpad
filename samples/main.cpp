@@ -170,19 +170,11 @@ void TestLightBulb() {
 }
 
 void TestLightSensor() {
-    int light = bp.lightSensor.readLightLevel();
-
-    std::string l = "L:" + std::to_string(light) + "  ";
-
-    DrawString(1, 20, l);
+    DrawString(1, 20, "L:" + std::to_string(bp.lightSensor.readLightLevel()) + "  ");
 }
 
 void TestTemperatureSensor() {
-    int temp = bp.temperatureSensor.getValue();
-
-    std::string t = "T:" + std::to_string(temp) + "  ";
-
-    DrawString(1, 40, t);
+    DrawString(1, 40, "T:" + std::to_string(bp.temperatureSensor.getValue()) + "  ");
 }
 
 void TestServo() {
@@ -219,14 +211,9 @@ void TestAccelerometer() {
     if (msg != nullptr)
         DrawString(1, 36, msg);
 
-    std::string strX = "X:" + std::to_string(x) + "       ";
-    DrawString(1, 1, strX);
-
-    std::string strY = "Y:" + std::to_string(y) + "       ";
-    DrawString(1, 12, strY);
-
-    std::string strZ = "Z:" + std::to_string(z) + "       ";
-    DrawString(1, 24, strZ);
+    DrawString(1, 1, "X:" + std::to_string(x) + "       ");
+    DrawString(1, 12, "Y:" + std::to_string(y) + "       ");
+    DrawString(1, 24, "Z:" + std::to_string(z) + "       ");
 }
 
 void TestDisplay() {
