@@ -2,6 +2,7 @@
 #define BPDISPLAY_H
 
 #include "I2C.h"
+
 #include <cstdint>
 
 #define DISPLAY_DEFAULT_ADDRESS 0x78
