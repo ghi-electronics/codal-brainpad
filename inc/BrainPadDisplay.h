@@ -16,7 +16,6 @@ namespace codal {
         uint16_t address;
 
         void writeCommand(int cmd);
-        void drawNativePoint(int x, int y, bool set);
         void flush();
 
     public:

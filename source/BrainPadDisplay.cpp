@@ -56,15 +56,6 @@ void BrainPadDisplay::writeCommand(int cmd) {
     i2c.write(address, data, 2, false);
 }
 
-void BrainPadDisplay::drawNativePoint(int x, int y, bool set) {
-    int index = (x + (y / 8) * 128) + 1;
-
-    if (set)
-        vram[index] |= static_cast<uint8_t>(1 << (y % 8));
-    else
-        vram[index] &= static_cast<uint8_t>(~(1 << (y % 8)));
-}
-
 void BrainPadDisplay::flush() {
     i2c.write(address, vram, BrainPadDisplay::vramSize, false);
 }
@@ -72,14 +63,16 @@ void BrainPadDisplay::flush() {
 void BrainPadDisplay::writeScreenBuffer(uint8_t* buffer) {
     for (int x = 0; x < 128; x++) {
         for (int y = 0; y < 64; y++) {
+            int offset = (y / 8) + (x * 8);
+            int mask = 1 << (y % 8);
+            int index = (x + (y / 8) * 128) + 1;
 
-            int offset = ( (y / 8) + x * 8) ;
-            int mask = (1 << (y % 8));
-
-            drawNativePoint(x, y, (buffer[offset] & mask) > 0);
+            if (buffer[offset] & mask)
+                vram[index] |= static_cast<uint8_t>(1 << (y % 8));
+            else
+                vram[index] &= static_cast<uint8_t>(~(1 << (y % 8)));
         }
     }
 
     flush();
 }
-
