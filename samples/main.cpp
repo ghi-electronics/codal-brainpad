@@ -4,7 +4,7 @@
 
 BrainPad bp;
 
-uint8_t PXTvram[128 * 64 / 8];
+uint8_t vram[128 * 64 / 8];
 uint8_t* font = new uint8_t[95 * 5] {
     0x00, 0x00, 0x00, 0x00, 0x00, /* Space	0x20 */
     0x00, 0x00, 0x4f, 0x00, 0x00, /* ! */
@@ -107,9 +107,9 @@ void DrawPointInPXTFormat(int x, int y, bool set = true) {
     int index = ((y / 8) + x * 8) + 1;
 
     if (set)
-        PXTvram[index] |= static_cast<uint8_t>(1 << (y % 8));
+        vram[index] |= static_cast<uint8_t>(1 << (y % 8));
     else
-        PXTvram[index] &= static_cast<uint8_t>(~(1 << (y % 8)));
+        vram[index] &= static_cast<uint8_t>(~(1 << (y % 8)));
 }
 
 void DrawText(int x, int y, char letter) {
@@ -237,7 +237,7 @@ void TestAccelerometer() {
 
 void TestDisplay() {
     DrawString(0, 0, "Hello!");
-    bp.lcd.writeScreenBuffer(PXTvram);
+    bp.lcd.writeScreenBuffer(vram);
 }
 
 int main() {
@@ -253,7 +253,7 @@ int main() {
     while (true) {
         TestLightSensor();
         TestTemperatureSensor();
-        bp.lcd.writeScreenBuffer(PXTvram);
+        bp.lcd.writeScreenBuffer(vram);
     }
 
     return 0;
