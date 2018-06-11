@@ -2,9 +2,9 @@
 #include "BrainPadDisplay.h"
 #include <string>
 
-BrainPad brain;
+BrainPad bp;
 
-uint8_t PXTvram[128*64/8];
+uint8_t PXTvram[128 * 64 / 8];
 uint8_t* font = new uint8_t[95 * 5] {
     0x00, 0x00, 0x00, 0x00, 0x00, /* Space	0x20 */
     0x00, 0x00, 0x4f, 0x00, 0x00, /* ! */
@@ -104,7 +104,7 @@ uint8_t* font = new uint8_t[95 * 5] {
 };
 
 void DrawPointInPXTFormat(int x, int y, bool set = true) {
-    int index = ( (y / 8) + x * 8) + 1;
+    int index = ((y / 8) + x * 8) + 1;
 
     if (set)
         PXTvram[index] |= static_cast<uint8_t>(1 << (y % 8));
@@ -135,16 +135,16 @@ void DrawString(int x, int y, std::string text) {
 }
 
 void TestButtons() {
-    if (brain.buttonUp.isPressed())
+    if (bp.buttonUp.isPressed())
         DrawString(1, 40, "UP   ");
 
-    if (brain.buttonLeft.isPressed())
+    if (bp.buttonLeft.isPressed())
         DrawString(1, 40, "LEFT ");
 
-    if (brain.buttonRight.isPressed())
+    if (bp.buttonRight.isPressed())
         DrawString(1, 40, "RIGHT");
 
-    if (brain.buttonDown.isPressed())
+    if (bp.buttonDown.isPressed())
         DrawString(1, 40, "DOWN ");
 
 }
@@ -154,27 +154,27 @@ void TestBuzzer() {
 
     int frequency = 1800;
 
-    brain.io.buzzer.setAnalogValue(512); //per https://github.com/Microsoft/pxt-brainpad/blob/master/libs/music/music.cpp#L48
-    brain.io.buzzer.setAnalogPeriodUs(1000000 / frequency);
+    bp.io.buzzer.setAnalogValue(512); //per https://github.com/Microsoft/pxt-brainpad/blob/master/libs/music/music.cpp#L48
+    bp.io.buzzer.setAnalogPeriodUs(1000000 / frequency);
 
-    brain.sleep(300);
+    bp.sleep(300);
 
-    brain.io.buzzer.setAnalogValue(0);
+    bp.io.buzzer.setAnalogValue(0);
 }
 
 void TestLightBulb() {
     // Slowley turn the LED on
 
     for (int i = 0; i < 10; i++) {
-        brain.io.ledBlue.setAnalogValue(i * 100);
-        brain.sleep(200);
+        bp.io.ledBlue.setAnalogValue(i * 100);
+        bp.sleep(200);
     }
 
-    brain.io.ledBlue.setAnalogValue(0);
+    bp.io.ledBlue.setAnalogValue(0);
 }
 
 void TestLightSensor() {
-    int light = brain.lightSensor.readLightLevel();
+    int light = bp.lightSensor.readLightLevel();
 
     std::string l = "L:" + std::to_string(light) + "  ";
 
@@ -182,7 +182,7 @@ void TestLightSensor() {
 }
 
 void TestTemperatureSensor() {
-    int temp = brain.temperatureSensor.getValue();
+    int temp = bp.temperatureSensor.getValue();
 
     std::string t = "T:" + std::to_string(temp) + "  ";
 
@@ -192,24 +192,24 @@ void TestTemperatureSensor() {
 void TestServo() {
     // Requires servo motor on servo pins #1
 
-    brain.io.servoOne.setServoValue(180);
-    brain.sleep(200);
+    bp.io.servoOne.setServoValue(180);
+    bp.sleep(200);
 
-    brain.io.servoOne.setServoValue(90);
-    brain.sleep(200);
+    bp.io.servoOne.setServoValue(90);
+    bp.sleep(200);
 
-    brain.io.servoOne.setServoValue(0);
-    brain.sleep(200);
+    bp.io.servoOne.setServoValue(0);
+    bp.sleep(200);
 }
 
 void TestAccelerometer() {
     const char* msg = nullptr;
 
-    int x = brain.accelerometer.getX();
-    int y = brain.accelerometer.getY();
-    int z = brain.accelerometer.getZ();
+    int x = bp.accelerometer.getX();
+    int y = bp.accelerometer.getY();
+    int z = bp.accelerometer.getZ();
 
-    switch (brain.accelerometer.getGesture()) {
+    switch (bp.accelerometer.getGesture()) {
         case ACCELEROMETER_EVT_TILT_RIGHT: msg = "TILT RIGHT"; break;
         case ACCELEROMETER_EVT_FACE_DOWN: msg = "FACE DOWN "; break;
         case ACCELEROMETER_EVT_TILT_UP: msg = "TILT UP   "; break;
@@ -237,14 +237,14 @@ void TestAccelerometer() {
 
 void TestDisplay() {
     DrawString(0, 0, "Hello!");
-    brain.lcd.writeScreenBuffer(PXTvram);
+    bp.lcd.writeScreenBuffer(PXTvram);
 }
 
 int main() {
-    brain.init();
-    brain.lightSensor.init();
-    brain.lightSensor.setPeriod(50);
-    brain.temperatureSensor.init();
+    bp.init();
+    bp.lightSensor.init();
+    bp.lightSensor.setPeriod(50);
+    bp.temperatureSensor.init();
     TestDisplay();
     TestServo();
     TestBuzzer();
@@ -253,7 +253,7 @@ int main() {
     while (true) {
         TestLightSensor();
         TestTemperatureSensor();
-        brain.lcd.writeScreenBuffer(PXTvram);
+        bp.lcd.writeScreenBuffer(PXTvram);
     }
 
     return 0;
