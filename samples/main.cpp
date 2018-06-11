@@ -170,7 +170,7 @@ void TestLightBulb() {
 }
 
 void TestLightSensor() {
-    DrawString(1, 20, "L:" + std::to_string(bp.lightSensor.readLightLevel()) + "  ");
+    DrawString(1, 20, "L:" + std::to_string(bp.lightSensor.getValue()) + "  ");
 }
 
 void TestTemperatureSensor() {
