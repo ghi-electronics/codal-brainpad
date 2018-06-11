@@ -104,8 +104,8 @@ uint8_t* font = new uint8_t[95 * 5] {
     0x08, 0x08, 0x2a, 0x1c, 0x08  /* ~ */
 };
 
-void DrawPointInPXTFormat(int x, int y, bool set = true) {
-    int index = ((y / 8) + x * 8) + 1;
+void DrawPixel(int x, int y, bool set = true) {
+    int index = (y / 8) + (x * 8) + 1;
 
     if (set)
         vram[index] |= static_cast<uint8_t>(1 << (y % 8));
@@ -113,22 +113,22 @@ void DrawPointInPXTFormat(int x, int y, bool set = true) {
         vram[index] &= static_cast<uint8_t>(~(1 << (y % 8)));
 }
 
-void DrawText(int x, int y, char letter) {
+void DrawCharacter(int x, int y, char letter) {
     int index = 5 * (letter - 32);
 
     for (int h = 0; h < 5; h++)
         for (int v = 0; v < 8; v++)
-            DrawPointInPXTFormat(x + h, y + v, (font[index + h] & (1 << v)) != 0);
+            DrawPixel(x + h, y + v, (font[index + h] & (1 << v)) != 0);
 
     // clear the space between characters
     for (int i = 0; i < 8; i++)
-        DrawPointInPXTFormat(x + 5, y + i, 0);
+        DrawPixel(x + 5, y + i, 0);
 }
 
 void DrawString(int x, int y, std::string text) {
     for (size_t i = 0; i < text.length(); i++) {
         if (text[i] >= 32) {
-            DrawText(x, y, text[i]);
+            DrawCharacter(x, y, text[i]);
 
             x += 6;
         }
