@@ -44,6 +44,7 @@ void MMA8453::writeRegister(uint8_t reg, uint8_t val) {
 int MMA8453::updateSample() {
     int divisor = rangeDivisor.get(this->getRange());
     uint8_t data[6];
+	int1.getDigitalValue();
 
     if (int1.getDigitalValue() == 0) {
         i2c.readRegister(address, OUT_X_MSB, data, 6);
@@ -72,12 +73,19 @@ int MMA8453::updateSample() {
 }
 
 int MMA8453::configure() {
-    writeRegister(CTRL_REG1, CTRL_REG1_SLEEP);
+            uint8_t buffer[1];
+			writeRegister(0x2B, 0x40);
+			// Waits until reset bit is cleared
+			do {
+				i2c.readRegister(address, 0x2B, buffer, 1);
+			} while((buffer[0] & 0x40) >> 6 == 1);
 
-    writeRegister(XYZ_DATA_CFG, rangeRegister.get(getRange()));
-    writeRegister(CTRL_REG4, CTRL_REG4_INT_DATA);
-    writeRegister(CTRL_REG5, CTRL_REG5_SET_INT_PIN);
-    writeRegister(CTRL_REG1, CTRL_REG1_ACTIVE);
+            writeRegister(0x2C, 0x02); // CTRL_REG3 Set interrupt to Active High
+            writeRegister(0x15, 0x78); // FF_MT_CFG setting Motion Detection on all three axis
+            writeRegister(0x17, 0x0F); // FF_MT_THS Sets threshhold
+            writeRegister(0x2D, 0x04); // CTRL_REG4
+            writeRegister(0x2E, 0x04); // CTRL_REG5
+            writeRegister(0x2A, 0x01); // CTRL_REG1 activate
 
     return DEVICE_OK;
 }
