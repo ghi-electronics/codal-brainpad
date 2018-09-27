@@ -44,8 +44,7 @@ void MMA8453::writeRegister(uint8_t reg, uint8_t val) {
 int MMA8453::updateSample() {
     int divisor = rangeDivisor.get(this->getRange());
     uint8_t data[6];
-	int1.getDigitalValue();
-
+	
     if (int1.getDigitalValue() == 0) {
         i2c.readRegister(address, OUT_X_MSB, data, 6);
 
